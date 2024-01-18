@@ -4,6 +4,8 @@ import Home from './components/home/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, Link } from "react-router-dom";
 import About from './components/about/About'
+import JobCategoryList from './components/jobCategory/JobCategoryList';
+
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           <button type="button" className="btn btn-warning">Sign-up</button>
         </div>
       </div>
+      <Home/>
+      <JobCategoryList/>
     </div>
   </header>
     </div>
