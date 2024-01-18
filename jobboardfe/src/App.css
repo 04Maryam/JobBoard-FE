@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.purple-header {
+  background-color: rgb(56, 29, 56);
+  color: white;
+}
