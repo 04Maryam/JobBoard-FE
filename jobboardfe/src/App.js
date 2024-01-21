@@ -6,6 +6,9 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import { Routes, Route, Link } from "react-router-dom";
 import About from './components/about/About'
 import Signup from './components/authentication/Signup';
+import JobCategoryList from './components/jobCategory/JobCategoryList';
+import JobList from './components/job/JobList';
+
 
 function App() {
   return (
@@ -21,8 +24,7 @@ function App() {
         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" className="nav-link px-2 text-white">Home</a></li>
           <li><a href="/about" className="nav-link px-2 text-white">About</a></li>
-          <li><a href="#" className="nav-link px-2 text-white">Browse Jobs</a></li>
-          
+          <li><Link to="/jobs/" className="nav-link px-2 text-white"> Browse Jobs</Link></li>
           <li><a href="#" className="nav-link px-2 text-white">Create Company</a></li>
         </ul>
 
@@ -43,6 +45,8 @@ function App() {
     <Route path="/" element={<Home></Home>} />
     <Route path="/about" element={<About></About>} />
     <Route path="/signup" element={<Signup></Signup>} />
+      <Route path="/jobs/" element={<JobList/>}/>
+
     </Routes>
 
     <footer className="px-3 py-2  purple-header footerbottom">
