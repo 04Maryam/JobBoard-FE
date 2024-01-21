@@ -41,3 +41,24 @@
   background-color: rgb(56, 29, 56);
   color: white;
 }
+
+.aboutBg{
+background: linear-gradient(0deg, rgba(237, 255, 253, 0.5), rgba(237, 255, 253, 0.5)), url("../public/AboutPage1.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+background-position: 50% 50%;
+}
+
+.font{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.footerbottom{
+  padding-top: 0px;
+}
+
+.classic-font{
+  font-size: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}

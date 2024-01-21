@@ -2,8 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './components/home/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js'
 import { Routes, Route, Link } from "react-router-dom";
 import About from './components/about/About'
+import Signup from './components/authentication/Signup';
 
 function App() {
   return (
@@ -20,8 +22,8 @@ function App() {
           <li><a href="/" className="nav-link px-2 text-white">Home</a></li>
           <li><a href="/about" className="nav-link px-2 text-white">About</a></li>
           <li><a href="#" className="nav-link px-2 text-white">Browse Jobs</a></li>
-          <li><a href="#" className="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" className="nav-link px-2 text-white">About</a></li>
+          
+          <li><a href="#" className="nav-link px-2 text-white">Create Company</a></li>
         </ul>
 
         <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -30,7 +32,7 @@ function App() {
 
         <div className="text-end">
           <button type="button" className="btn btn-outline-light me-2">Login</button>
-          <button type="button" className="btn btn-warning">Sign-up</button>
+          <Link to="/signup"><button type="button" className="btn btn-warning text-black">Sign-up</button></Link>
         </div>
       </div>
     </div>
@@ -40,7 +42,17 @@ function App() {
     <Routes>
     <Route path="/" element={<Home></Home>} />
     <Route path="/about" element={<About></About>} />
+    <Route path="/signup" element={<Signup></Signup>} />
     </Routes>
+
+    <footer className="px-3 py-2  purple-header footerbottom">
+        <div className="container">
+          <p className="mb-1 text-white text-center font">&copy; 2024 | SkillSail </p>
+        </div>
+      </footer>
+
+  
+
     </>
   );
 }
