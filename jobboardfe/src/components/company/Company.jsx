@@ -3,7 +3,7 @@ import React from 'react'
 export default function Company(props) {
   return (
     <div className="card h-100">
-      <img src={props.image} className="card-img-top"/>
+      {props.logo && <img src={`${props.logo}`} alt={props.company_name} />}
       <div className="card-body">
         <h5 className="card-title">{props.company_name}</h5>
         <p className='card-text'>Email: {props.email}</p>

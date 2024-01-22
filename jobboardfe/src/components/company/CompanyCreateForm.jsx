@@ -2,7 +2,13 @@ import React, { useState } from 'react'
 
 export default function CompanyCreateForm(props) {
 
-    const [newCompany, setNewCompany] = useState({})
+    // const [newCompany, setNewCompany] = useState({})
+    const [newCompany, setNewCompany] = useState({
+        company_name: '',
+        location: '',
+        logo: null, // This will hold the selected file
+        email: '',
+      });
 
     const handleChange = (e) => {
         const company = {...newCompany}
@@ -11,9 +17,21 @@ export default function CompanyCreateForm(props) {
         setNewCompany(company)
     }
 
+    const handleFileChange = (e) => {
+        setNewCompany({
+            ...newCompany,
+            logo: e.target.files[0], // Get the first file selected
+          })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.createCompany(newCompany)
+        const formData = new FormData();
+        formData.append('company_name', newCompany.company_name);
+        formData.append('location', newCompany.location);
+        formData.append('logo', newCompany.logo);
+        formData.append('email', newCompany.email);
+        props.createCompany(formData)
     }
 
   return (
@@ -26,7 +44,7 @@ export default function CompanyCreateForm(props) {
             </div>
             <div>
                 <label className='form-label'>Company Logo</label>
-                <input onChange={handleChange} className='form-control' type='file' name='logo'></input>
+                <input onChange={handleFileChange} className='form-control' type='file' name='logo'></input>
             </div>
             <div>
                 <label className='form-label'>Location</label>

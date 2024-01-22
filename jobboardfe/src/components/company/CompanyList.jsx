@@ -48,10 +48,10 @@ export default function CompanyList() {
     }
 
     const updateCompany = (company) => {
-        Axios.put(`company/${company.id}/update/`,{
-            company_name: company.company_name,
-            email: company.email,
-            location: company.location,
+        Axios.put(`company/${company.id}/update/`, company, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         })
         .then(res => {
             console.log('company info updated', res);
