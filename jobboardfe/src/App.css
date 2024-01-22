@@ -54,11 +54,20 @@ background-position: 50% 50%;
 }
 
 .footerbottom{
-  padding-top: 0px;
+  /* position: absolute; */
+  bottom: 0;
+  height: 50px;
+  width: 100%;
 }
 
 .classic-font{
   font-size: 32px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
+}
+
+#root{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
