@@ -39,11 +39,13 @@ function App() {
       <JobCategoryList/>
     </div>
   </header>
+  
     </div>
 
     <Routes>
     <Route path="/" element={<Home></Home>} />
     <Route path="/about" element={<About></About>} />
+    <Route path='/skill' />
     </Routes>
     </>
   );
