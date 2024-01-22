@@ -1,10 +1,12 @@
 import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/home/Home';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, Link } from "react-router-dom";
 import About from './components/about/About'
 import JobCategoryList from './components/jobCategory/JobCategoryList';
+import SkillsList from './components/skills/SkillsList';
+import CompanyList from './components/company/CompanyList';
 
 
 function App() {
@@ -45,7 +47,8 @@ function App() {
     <Routes>
     <Route path="/" element={<Home></Home>} />
     <Route path="/about" element={<About></About>} />
-    <Route path='/skill' />
+    <Route path='/skills' element={<SkillsList/>} />
+    <Route path='/companies' element={<CompanyList />} />
     </Routes>
     </>
   );

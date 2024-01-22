@@ -18,8 +18,8 @@ export default function SkillEditForm(props) {
         <h1>Edit Skill</h1>
         <form onSubmit={handleSubmit}>
             <div>
-                <label>Skill Name</label>
-                <input type='text' name='skill_name' value={skillName} onChange={handleChange}></input>
+                <label className='form-label'>Skill Name</label>
+                <input className='form-control' type='text' name='skill_name' value={skillName} onChange={handleChange}></input>
             </div>
             <div>
                 <input type='submit' value='Save Skill'></input>

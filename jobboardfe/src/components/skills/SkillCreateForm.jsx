@@ -21,8 +21,8 @@ export default function SkillCreateForm(props) {
         <h1>Create a Skill</h1>
         <form onSubmit={handleSubmit}>
             <div>
-                <label>Skill Name</label>
-                <input type='text' name='skill_name' onChange={handleChange}></input>
+                <label className='form-label'>Skill Name</label>
+                <input className='form-control' type='text' name='skill_name' onChange={handleChange}></input>
             </div>
             <div>
                 <input type='submit' value='Save Skill'></input>
