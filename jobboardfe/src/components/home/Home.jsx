@@ -5,7 +5,7 @@ export default function Home() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8000/hello-world/')
+    axios.get('/hello-world/')
       .then(response => {
         setMessage(response.data.message);
       })
