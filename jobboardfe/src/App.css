@@ -41,3 +41,58 @@
   background-color: rgb(56, 29, 56);
   color: white;
 }
+
+.aboutBg{
+background: linear-gradient(0deg, rgba(237, 255, 253, 0.5), rgba(237, 255, 253, 0.5)), url("../public/AboutPage1.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+background-position: 50% 50%;
+}
+
+.font{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.footerbottom{
+  /* position: absolute; */
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+}
+
+.classic-font{
+  font-size: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+#root{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+  
+/* .card-footer {
+  background-color: rgba(128, 0, 128, 0.2);
+} */
+
+.btn-purple {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #2f0b5f;
+  --bs-btn-border-color: #2f0b5f;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #451c7a;
+  --bs-btn-hover-border-color: #451c7a;
+  --bs-btn-focus-shadow-rgb: 49,132,253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #451c7a;
+  --bs-btn-active-border-color: #58308d;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #2f0b5f;
+  --bs-btn-disabled-border-color: #2f0b5f;
+}
+
+.btn {
+  margin: 2px;
+}
