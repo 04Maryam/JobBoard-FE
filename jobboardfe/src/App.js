@@ -1,14 +1,19 @@
+
 import React, { useEffect, useState } from 'react';
-import "./App.css";
-import Home from "./components/home/Home";
+import logo from './logo.svg';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import './App.css';
+import Home from './components/home/Home';
 import { Routes, Route, Link } from "react-router-dom";
-import About from "./components/about/About";
+import About from './components/about/About';
 import Signup from "./components/authentication/Signup";
-import JobCategoryList from "./components/jobCategory/JobCategoryList";
-import JobList from "./components/job/JobList";
+import JobCategoryList from './components/jobCategory/JobCategoryList';
+import SkillsList from './components/skills/SkillsList';
+import CompanyList from './components/company/CompanyList';
+import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
+
 
 function App() {
   const [userRole, setUserRole] = useState('');
@@ -97,9 +102,12 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home></Home>} />
-          <Route path="/about" element={<About></About>} />
+          <Route path="/about" element={<About/>} />
+          <Route path='/skills' element={<SkillsList/>} />
+          <Route path='/companies' element={<CompanyList />} />
+          <Route path="/jobs/" element={<JobList/>}/>
+                                   
           <Route path="/signup" element={<Signup></Signup>} />
-          <Route path="/jobs/" element={<JobList />} />
           <Route path="/login/" element={<Login></Login>} />
         </Routes>
       </main>
