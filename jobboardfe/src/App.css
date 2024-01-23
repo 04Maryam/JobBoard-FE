@@ -42,6 +42,35 @@
   color: white;
 }
 
+.aboutBg{
+background: linear-gradient(0deg, rgba(237, 255, 253, 0.5), rgba(237, 255, 253, 0.5)), url("../public/AboutPage1.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+background-position: 50% 50%;
+}
+
+.font{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.footerbottom{
+  /* position: absolute; */
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+}
+
+.classic-font{
+  font-size: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+#root{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  
 /* .card-footer {
   background-color: rgba(128, 0, 128, 0.2);
 } */
