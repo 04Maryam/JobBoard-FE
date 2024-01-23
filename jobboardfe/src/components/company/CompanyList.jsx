@@ -20,7 +20,7 @@ export default function CompanyList() {
     }
 
     const loadCompanyList = () => {
-        Axios.get('company/')
+        Axios.get('/company/')
         .then(res => {
             console.log('Companies list Fetched successfully!', res);
             setCompanies(res.data)
@@ -31,7 +31,7 @@ export default function CompanyList() {
     }
 
     const createCompany = (newCompany) => {
-        Axios.post('company/create/', newCompany)
+        Axios.post('/company/create/', newCompany)
         .then(res => {
             console.log('company added successfully!', res);
             loadCompanyList();
@@ -48,7 +48,7 @@ export default function CompanyList() {
     }
 
     const updateCompany = (company) => {
-        Axios.put(`company/${company.id}/update/`, company, {
+        Axios.put(`/company/${company.id}/update/`, company, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -64,7 +64,7 @@ export default function CompanyList() {
     }
 
     const deleteCompany = (id) => {
-        Axios.delete(`company/${id}/delete`)
+        Axios.delete(`/company/${id}/delete`)
         .then(res => {
             console.log('company deleted successfully', res);
             loadCompanyList()

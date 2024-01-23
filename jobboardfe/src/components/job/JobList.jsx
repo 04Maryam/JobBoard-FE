@@ -12,7 +12,7 @@ export default function JobList() {
     const setHeaders = () => {
       const authHeader = {
         headers: {
-          Authorization: 'Bearer '+ localStorage.getItem("token")
+          Authorization: 'Bearer '+ localStorage.getItem("access_token")
         }
       }
       return authHeader;

@@ -25,7 +25,7 @@ export default function SkillsList() {
     }
 
     const loadSkillList = () => {
-        Axios.get('skill/')
+        Axios.get('/skill/')
         .then(res => {
             console.log('skills fetched', res);
             setSkills(res.data)
@@ -36,7 +36,7 @@ export default function SkillsList() {
     }
 
     const createSkill = (newSkill) => {
-        Axios.post('skill/create/', newSkill)
+        Axios.post('/skill/create/', newSkill)
         .then(res => {
             console.log('skill added', res);
             loadSkillList();
@@ -47,7 +47,7 @@ export default function SkillsList() {
     }
 
     const updateSkill = (id, updatedSkill) => {
-        Axios.put(`skill/${id}/update`, { skill_name: updatedSkill })
+        Axios.put(`/skill/${id}/update`, { skill_name: updatedSkill })
         .then(res => {
             console.log('skill updated successfuly', res);
             loadSkillList();
@@ -58,7 +58,7 @@ export default function SkillsList() {
     }
 
     const deleteSkill = (id) => {
-        Axios.delete(`skill/${id}/delete`)
+        Axios.delete(`/skill/${id}/delete`)
         .then(res => {
             console.log('skill deleted successfully', res);
             loadSkillList();

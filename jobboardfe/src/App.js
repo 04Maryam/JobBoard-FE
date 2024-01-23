@@ -19,21 +19,21 @@ function App() {
   const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
-    const fetchUserRole = async () => {
-      try {
-        const response = await fetch('/api/user/role/', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // Include the authentication token
-          },
-        });
-        const data = await response.json();
-        setUserRole(data.role);
-      } catch (error) {
-        // Handle error
-      }
-    };
+    // const fetchUserRole = async () => {
+    //   try {
+    //     const response = await fetch('/api/user/role/', {
+    //       headers: {
+    //         Authorization: `Bearer ${access_Token}`, // Include the authentication token
+    //       },
+    //     });
+    //     const data = await response.json();
+    //     setUserRole(data.role);
+    //   } catch (error) {
+    //     // Handle error
+    //   }
+    // };
 
-    fetchUserRole();
+    // fetchUserRole();
   }, []);
 
   return (
