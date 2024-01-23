@@ -16,25 +16,22 @@ import Login from "./components/authentication/Login";
 
 
 function App() {
-  const [userRole, setUserRole] = useState('');
+  
+  const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState({});
+  const [userInfo,setUserInfo]=useState()
 
-  useEffect(() => {
-    // const fetchUserRole = async () => {
-    //   try {
-    //     const response = await fetch('/api/user/role/', {
-    //       headers: {
-    //         Authorization: `Bearer ${access_Token}`, // Include the authentication token
-    //       },
-    //     });
-    //     const data = await response.json();
-    //     setUserRole(data.role);
-    //   } catch (error) {
-    //     // Handle error
-    //   }
-    // };
 
-    // fetchUserRole();
-  }, []);
+
+
+
+  const onLogoutHandler = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    setIsAuth(false);
+    setUser(null);
+    setUserInfo(null);
+  };
 
   return (
     <>
