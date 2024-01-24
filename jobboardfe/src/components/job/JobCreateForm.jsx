@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 
 export default function JobCreateForm(props) {
-    const [newJob, setJob] = useState('')
+    const [newJob, setJob] = useState({})
 
     const [companies, setCompanies] = useState([]);
     const [jobCategories, setJobCategories] = useState([]);
@@ -76,7 +76,7 @@ export default function JobCreateForm(props) {
         <div>
           <label>Company</label>
           <select name='company' className="form-select" onChange={handleChange} value={newJob.company}>
-              <option value=''>Select a company</option>
+              <option>Select a company</option>
               {companies.map(company => (
                 <option key={company.id} value={company.id}>{company.company_name}</option>
               ))}
@@ -86,7 +86,7 @@ export default function JobCreateForm(props) {
         <div>
           <label>Job Category</label>
           <select name='job_category' className="form-select" onChange={handleChange} value={newJob.job_category}>
-            <option value=''>Select a job category</option>
+            <option>Select a job category</option>
             {jobCategories.map(category => (
               <option key={category.id} value={category.id}>{category.category_name}</option>
             ))}
@@ -110,7 +110,7 @@ export default function JobCreateForm(props) {
 
         <div>
           <label>Skills</label>
-          <select name='skills[]' className="form-select" multiple onChange={handleChange} value={newJob.skills}>
+          <select name='skills' className="form-select" multiple onChange={handleChange} value={newJob.skills}>
             {skills.map(skill => (
               <option key={skill.id} value={skill.id}>{skill.skill_name}</option>
             ))}

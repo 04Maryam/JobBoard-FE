@@ -7,21 +7,25 @@ import JobEditForm from './JobEditForm';
 export default function JobList() {
     const [job, setJob] = useState([]);
     const [isEdit, setIsEdit] = useState(false)
+    const [isAdd, setIsAdd] = useState(false);
     const [currentJob, setCurrentJob] = useState({})
   
     const setHeaders = () => {
-      const authHeader = {
-        headers: {
-          Authorization: 'Bearer '+ localStorage.getItem("access_token")
-        }
-      }
-      return authHeader;
-    }
+      return{
+          headers: {
+              // Authorization:'Bearer '+ localStorage.getItem("access_token")
+              Authorization:'Bearer '+ localStorage.getItem("access_token")
+          }
+      };
+  }
 
     useEffect(() => {
       loadJobList();
     }, []);
   
+    const handleClick = () => {
+      setIsAdd(!isAdd)
+  }
   
       const loadJobList = () => {
           Axios.get('/jobs/')
@@ -38,9 +42,10 @@ export default function JobList() {
       
 
       const addJob = (job) => {
-        Axios.post("/jobs/create/", job)
+        console.log('Adding job:', job);
+        Axios.post(`/jobs/create/?category_id=${job.job_category}&company_id=${job.company}`, job, setHeaders())
         .then(res =>{
-          console.log('Job has been Added') 
+          console.log('Job has been Added',res) 
           loadJobList()
         })
         .catch(err => {
@@ -66,7 +71,7 @@ export default function JobList() {
     // }
   
     const deleteJob = (id) => {
-      Axios.post(`/jobs/${id}/delete/`)
+      Axios.delete(`/jobs/${id}/delete/`, setHeaders())
       .then(res => {
           console.log("Record deleted Successfullyyy !!");
           console.log(res);
@@ -78,14 +83,19 @@ export default function JobList() {
       })  
     }
   
+    const editJob = (job) => {
+      setCurrentJob(job)
+      console.log(job);
+      setIsEdit(true)
+  }
   
     const updateJob= (job) => {
-      Axios.post(`/jobs/id=${currentJob.id}/update/`, job)
+      Axios.post(`/jobs/update/?category_id=${job.job_category}&job_id=${currentJob.id}`, job, setHeaders())
       .then(res => {
-          console.log("Category Updated Successfullyyy !!");
+          console.log("Category Updated Successfullyyy !!", res);
           console.log(res);
-          loadJobList();
           setIsEdit(false);
+          loadJobList();
           
       })
       .catch(err => {
@@ -98,7 +108,7 @@ export default function JobList() {
   
           <tr key={index}>  
          
-            <Job {...job} deleteJob = {deleteJob}/>
+            <Job {...job} deleteJob= {deleteJob} editJob={editJob}/>
           </tr>
         ))
   
@@ -106,6 +116,7 @@ export default function JobList() {
       <div>
         <div>
           <h1>Job List</h1>
+          <button className='btn' onClick={handleClick}>Add Job</button>
           <table>
             <thead>
               <tr>
@@ -115,6 +126,8 @@ export default function JobList() {
                 <th> Job Description</th>
                 <th>Salary</th>
                 <th>Skills</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -123,10 +136,11 @@ export default function JobList() {
           </table>
         </div>
   
-        {(!isEdit) ?
+        {isAdd &&
         <JobCreateForm addJob={addJob}/>
-          :
-          <JobEditForm key={currentJob.id} category={currentJob} updateJobCategory={updateJob} />
+        }
+        {isEdit &&
+          <JobEditForm currentJob={currentJob} updateJob={updateJob} setCurrentJob={setCurrentJob}/>
         }
         {/* <JobCategoryCreateForm addJobCategory = {addJobCategory}/> */}
       </div>

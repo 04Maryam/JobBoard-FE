@@ -11,14 +11,26 @@ export default function CompanyEditForm(props) {
         setcurrentCompany(company)
     }
 
+    const handleFileChange = (e) => {
+        setcurrentCompany({
+            ...currentCompany,
+            logo: e.target.files[0], // Get the first file selected
+          })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.updateCompany(currentCompany)
+        const formData = new FormData();
+        formData.append('company_name', currentCompany.company_name);
+        formData.append('location', currentCompany.location);
+        formData.append('logo', currentCompany.logo);
+        formData.append('email', currentCompany.email);
+        props.updateCompany(formData)
     }
 
   return (
     <div>
-        <h1>Create a Company</h1>
+        <h1>Edit Company</h1>
         <form onSubmit={handleSubmit} >
             <div>
                 <label className='form-label'>Company Name</label>
@@ -26,7 +38,7 @@ export default function CompanyEditForm(props) {
             </div>
             <div>
                 <label className='form-label'>Company Logo</label>
-                <input onChange={handleChange} className='form-control' type='file' name='logo'></input>
+                <input onChange={handleFileChange} className='form-control' type='file' name='logo'></input>
             </div>
             <div>
                 <label className='form-label'>Location</label>
@@ -37,7 +49,7 @@ export default function CompanyEditForm(props) {
                 <input value={currentCompany.email} onChange={handleChange} className='form-control' type='email' name='email'></input>
             </div>
             <div>
-                <input type='submit' value='Save Company'></input>
+                <input type='submit' value='Updated Company'></input>
             </div>
         </form>
     </div>
