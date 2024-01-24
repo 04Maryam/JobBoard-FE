@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
 
-export default function Login () {
+export default function Login (props) {
 
     const [loginData, setLoginData] = useState({});
     
@@ -28,25 +28,26 @@ export default function Login () {
     //     }
     //   };
 
-      const handleLogin = (newLogin) => {
-        Axios.post('/api/login/', newLogin)
-        .then(res => {
-            console.log('successfully logged in', res);
-            const access_token = res.data.access_token
-            const refresh_token = res.data.refresh_token
-            console.log('access token', access_token);
-            console.log('refresh token', refresh_token);
-            localStorage.setItem('access_token', access_token);
-            localStorage.setItem('refresh_token', refresh_token);
-        })
-        .catch(err => {
-            console.log('error logging in', err);
-        })
-      }
+    //   const handleLogin = (newLogin) => {
+    //     Axios.post('/login/', newLogin)
+    //     .then(res => {
+    //         console.log('successfully logged in', res.data);
+    //         const access_token = res.data.access_token
+    //         const refresh_token = res.data.refresh_token
+    //         console.log('access token', access_token);
+    //         console.log('refresh token', refresh_token);
+    //         localStorage.setItem('access_token', access_token);
+    //         localStorage.setItem('refresh_token', refresh_token);
+    //     })
+    //     .catch(err => {
+    //         console.log('error logging in', err.response);
+    //     })
+    //   }
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        handleLogin(loginData);
+        props.login(loginData);
+        e.target.reset();
       };
           return (
             <div className="container">
