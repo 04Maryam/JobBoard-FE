@@ -1,6 +1,5 @@
-import Axios from 'axios'
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import './App.css';
@@ -160,21 +159,21 @@ function App() {
         <header className="p-3 purple-header">
           <div className="container">
             <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-              <a
+              <Link
                 href="/"
                 className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-              ></a>
+              ></Link>
 
               <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                  <a href="/" className="nav-link px-2 text-white">
+                  <Link to="/" className="nav-link px-2 text-white">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/about" className="nav-link px-2 text-white">
+                  <Link to="/about" className="nav-link px-2 text-white">
                     About
-                  </a>
+                  </Link>
                 </li>
                 {isAuth ? (
                   <>
@@ -193,9 +192,9 @@ function App() {
                 </>
                 ):(
                   <li>
-                  <a href="/jobs/" className="nav-link px-2 text-white">
+                  <Link to="/jobs/" className="nav-link px-2 text-white">
                     Browse Category
-                  </a>
+                  </Link>
                 </li>
                
                 )
@@ -243,7 +242,7 @@ function App() {
       
       <main>
         <Routes>
-          <Route path="/" element={<Home></Home>} />
+        <Route path="/" element={<Home user={user} />} />
           <Route path="/about" element={<About/>} />
           <Route path='/skills' element={<SkillsList/>} />
           <Route path='/company/' element={<CompanyList/>} />

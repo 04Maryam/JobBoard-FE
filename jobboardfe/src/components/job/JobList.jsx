@@ -66,7 +66,7 @@ export default function JobList() {
     // }
   
     const deleteJob = (id) => {
-      Axios.delete(`/jobs/${id}/delete/`)
+      Axios.post(`/jobs/${id}/delete/`)
       .then(res => {
           console.log("Record deleted Successfullyyy !!");
           console.log(res);
@@ -80,7 +80,7 @@ export default function JobList() {
   
   
     const updateJob= (job) => {
-      Axios.put(`/jobs/id=${currentJob.id}/update/`, job)
+      Axios.post(`/jobs/id=${currentJob.id}/update/`, job)
       .then(res => {
           console.log("Category Updated Successfullyyy !!");
           console.log(res);
@@ -98,7 +98,7 @@ export default function JobList() {
   
           <tr key={index}>  
          
-            <Job {...job} deleteJobCategory = {deleteJob}/>
+            <Job {...job} deleteJob = {deleteJob}/>
           </tr>
         ))
   
