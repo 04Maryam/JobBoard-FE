@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import './App.css';
