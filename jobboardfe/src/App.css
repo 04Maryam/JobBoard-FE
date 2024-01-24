@@ -1,3 +1,5 @@
+ @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600&family=Trocchi&display=swap');
+
 .App {
   text-align: center;
 }
@@ -12,6 +14,8 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+
 
 .App-header {
   background-color: #282c34;
@@ -96,3 +100,34 @@ background-position: 50% 50%;
 .btn {
   margin: 2px;
 }
+.bg-text {
+  color: black;
+  position: absolute;
+  font-style: trocchi;
+  top: 40%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  font-family: 'Josefin Sans', sans-serif;
+font-family: 'Trocchi', serif;
+  font-size: 90px;
+}
+/* .centered {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+.home-img{
+ background: linear-gradient(0deg, rgba(237, 255, 252, 0.5), rgba(237, 255, 253, 0.5)), url('../public/images/job-search.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
+  .btn-outline-dark{
+    font-size: 25px;
+    width: 10%;
+    height: 10%;
+    color:black;
+    background-color: beige;
+  }

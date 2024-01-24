@@ -103,7 +103,7 @@ function App() {
           <Route path='/skills' element={<SkillsList/>} />
           <Route path='/companies' element={<CompanyList />} />
           <Route path="/jobs/" element={<JobList/>}/>
-                                   
+                                  
           <Route path="/signup" element={<Signup></Signup>} />
           <Route path="/login/" element={<Login></Login>} />
         </Routes>
