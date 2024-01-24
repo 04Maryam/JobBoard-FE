@@ -15,7 +15,7 @@ export default function Signup() {
       event.preventDefault();
   
       axios
-        .post('/api/signup/', {
+        .post('/signup/', {
           username,
           password,
           email,

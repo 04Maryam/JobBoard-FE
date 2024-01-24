@@ -4,13 +4,21 @@ import Company from './Company'
 import CompanyCreateForm from './CompanyCreateForm'
 import CompanyEditForm from './CompanyEditForm'
 
-export default function CompanyList() {
+export default function CompanyList(props) {
 
     const [companies, setCompanies] = useState([])
     const [currentCompany, setCurrentCompany] = useState({})
     const [isAdd, setIsAdd] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
 
+    const setHeaders = () => {
+        return{
+            headers: {
+                // Authorization:'Bearer '+ localStorage.getItem("access_token")
+                Authorization:'Bearer '+ localStorage.getItem("access_token")
+            }
+        };
+    }
     useEffect(() => {
       loadCompanyList()
     }, [])
@@ -31,13 +39,13 @@ export default function CompanyList() {
     }
 
     const createCompany = (newCompany) => {
-        Axios.post('/company/create/', newCompany)
+        Axios.post('/company/create/', newCompany, setHeaders())
         .then(res => {
             console.log('company added successfully!', res);
             loadCompanyList();
         })
         .catch(err => {
-            console.log('error addig company!', err);
+            console.log('error Adding company! Error in React!', err);
         })
     }
 
@@ -48,9 +56,10 @@ export default function CompanyList() {
     }
 
     const updateCompany = (company) => {
-        Axios.put(`/company/${company.id}/update/`, company, {
+        Axios.post(`/company/update/?company_id=${currentCompany.id}`, company, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                Authorization:'Bearer '+ localStorage.getItem("access_token"),
             },
         })
         .then(res => {
@@ -64,7 +73,7 @@ export default function CompanyList() {
     }
 
     const deleteCompany = (id) => {
-        Axios.delete(`/company/${id}/delete`)
+        Axios.delete(`/company/${id}/delete/`, setHeaders())
         .then(res => {
             console.log('company deleted successfully', res);
             loadCompanyList()
