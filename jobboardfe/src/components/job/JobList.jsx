@@ -105,15 +105,17 @@ export default function JobList() {
     return (
       <div>
         <div>
-          <h1>Job Category List</h1>
+          <h1>Job List</h1>
           <table>
             <thead>
+              <tr>
                 <th>Company</th>
                 <th>Job Category</th>
                 <th>Job Title</th>
                 <th> Job Description</th>
                 <th>Salary</th>
                 <th>Skills</th>
+              </tr>
             </thead>
             <tbody>
                 {allTheJobCategories}

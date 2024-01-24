@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 export default function JobCategoryEditForm(props) {
   const [jobCategory, setJobCategory] = useState(props.category)
 
-
     const handleChange = (event) => {
       const attributeToChange = event.target.name
       const newValue = event.target.value
@@ -16,7 +15,7 @@ export default function JobCategoryEditForm(props) {
     
     const handleSubmit = (event) => {
         event.preventDefault()
-        props.addJobCategory(jobCategory)
+        props.updateJobCategory(jobCategory)
         event.target.reset()
     }
   return (

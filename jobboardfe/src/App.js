@@ -1,11 +1,12 @@
-
+import Axios from 'axios'
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import './App.css';
+import { jwtDecode } from "jwt-decode";
 import Home from './components/home/Home';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import About from './components/about/About';
 import Signup from "./components/authentication/Signup";
 import JobCategoryList from './components/jobCategory/JobCategoryList';
@@ -13,26 +14,146 @@ import SkillsList from './components/skills/SkillsList';
 import CompanyList from './components/company/CompanyList';
 import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
+import CompanyCreateForm from './components/company/CompanyCreateForm';
 
 
 function App() {
-  
+  const navigate = useNavigate()
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
+  const [currentUser, setCurrentUser] = useState();
   const [userInfo,setUserInfo]=useState()
 
+  useEffect(() => {
+    //const user = setUser();
+    const user = getUser();
+    console.log("INIT USER",user);
+    if (user) {
+      setIsAuth(true);
+      setUser(user);
+      // setUserInfo(user.id)
+      // showUser(user.id)
+    }
+    else {
+      logout()
+    }
+   
+  }, []);
 
-
-
-
-  const onLogoutHandler = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    setIsAuth(false);
-    setUser(null);
-    setUserInfo(null);
+  const registerHandler = (user) => {
+    Axios.post("/signup/", user)
+      .then((res) => {
+        console.log(res);
+        console.log("Register Success");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("Register Not Success");
+      });
   };
 
+  
+
+  const handleLogin = (newLogin) => {
+    Axios.post('/login/', newLogin)
+    .then(res => {
+        console.log('successfully logged in', res.data);
+        const access_token = res.data.access_token
+        const refresh_token = res.data.refresh_token
+        console.log('access token', access_token);
+        console.log('refresh token', refresh_token);
+        localStorage.setItem('access_token', access_token);
+        localStorage.setItem('refresh_token', refresh_token);
+
+        const user = jwtDecode(access_token).user_id;
+        console.log("user",user);
+        if (user) {
+          setIsAuth(true)
+          setUser(user);
+        }
+        else {
+          setIsAuth(false);
+          setUser(null);
+        }
+        // user ? showUser(user.id) : showUser(null);
+        console.log('Login Success');
+        // navigate("/");
+    })
+    .catch(err => {
+        console.log('error logging in', err.response);
+    })
+  }
+
+
+  // const loginHandler = (cred) => {
+  //   Axios.post("/login/", cred)
+  //     .then((res) => {
+  //       console.log(res.data.token);
+  //       //Makes sure the token is Valid
+  //       let token = res.data.token;
+  //       if (token != null) {
+  //         localStorage.setItem("access_token", token);
+  //         const user = getUser();
+  //         console.log(user);
+  //         user ? setIsAuth(true) : setIsAuth(false);
+  //         user ? setUser(user) : setUser(null);
+  //         user ? showUser(user.id) : showUser(null)
+  //         console.log("Login Success");
+  //         // user ? setUserInfo(user.id) : setUserInfo(null)
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  const logout = () => {
+    setIsAuth(false);
+    setUser({});
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    // navigate('/login');
+    console.log('Logout Success');
+    console.log("INIT USER",user);
+  }
+
+
+  const getUser = () => {
+    const token = getToken();
+    return token ? jwtDecode(token).user_id : null;
+  };
+
+  const getToken = () => {
+    const token = localStorage.getItem("access_token");
+    return token;
+  };
+
+  const handleLogout = () => {
+    Axios.post('/logout/')
+      .then((response) => {
+        console.log('Have Successfully Logged out:', response.data);
+        
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error.response);
+      });
+  };
+
+  // const showUser = (id) =>{
+  //   Axios.get(`/user/detail?id=${id}`)
+  //   .then((response) => {
+  //     console.log(response)
+  //     let user = response.data.user
+  //     setCurrentUser(user)
+  //     setUserInfo(user)
+  // })
+  // .catch((err) => {
+  //     console.log(err)
+  // })
+  // }
+  const setHeaders =() =>{
+    return {headers:{Authorization:`Bearer ${getToken()}`}}
+  }
   return (
     <>
       <div className="App">
@@ -55,17 +176,30 @@ function App() {
                     About
                   </a>
                 </li>
+                {isAuth ? (
+                  <>
                 <li>
                   <Link to="/jobs/" className="nav-link px-2 text-white">
                     {" "}
-                    Browse Jobs
+                    Browse Category
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="nav-link px-2 text-white">
-                    Create Company
+                  <Link to="/company/" className="nav-link px-2 text-white">
+                    {" "}
+                    Companies
+                  </Link>
+                </li>
+                </>
+                ):(
+                  <li>
+                  <a href="/jobs/" className="nav-link px-2 text-white">
+                    Browse Category
                   </a>
                 </li>
+               
+                )
+              }
               </ul>
 
               <form
@@ -81,6 +215,12 @@ function App() {
               </form>
 
               <div className="text-end">
+                {isAuth ? (
+                  <button type="button" onClick={logout} className="btn btn-outline-light me-2">
+                  Logout
+                </button>
+                ):(
+                  <>
                 <Link to="/login/">
                   <button type="button" className="btn btn-outline-light me-2">
                     Login
@@ -91,21 +231,29 @@ function App() {
                     Sign-up
                   </button>
                 </Link>
+                </>
+                )
+                }
+                  
               </div>
             </div>
           </div>
         </header>
       </div>
+      
       <main>
         <Routes>
           <Route path="/" element={<Home></Home>} />
           <Route path="/about" element={<About/>} />
           <Route path='/skills' element={<SkillsList/>} />
-          <Route path='/companies' element={<CompanyList />} />
-          <Route path="/jobs/" element={<JobList/>}/>
-                                  
-          <Route path="/signup" element={<Signup></Signup>} />
-          <Route path="/login/" element={<Login></Login>} />
+          <Route path='/company/' element={<CompanyList/>} />
+          <Route path="/jobs" element={<JobList/>}/>
+           <Route path="/company/create" element={<CompanyCreateForm />} />                       
+          <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
+          <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
+          <Route path='/logout' element={<Login/>}/>
+          <Route path='/job_category' element={<JobCategoryList/>}/>
+      
         </Routes>
       </main>
 
