@@ -5,6 +5,7 @@ import JobCategoryCreateForm from './JobCategoryCreateForm';
 import JobCategoryEditForm from './JobCategoryEditForm';
 export default function JobCategoryList() {
   const [jobCategory, setJobCategory] = useState([]);
+  const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false)
   const [currentJobCategory, setCurrentJobCategory] = useState({})
 
@@ -80,45 +81,61 @@ export default function JobCategoryList() {
     })  
   }
 
-
-  const updateJobCategory = (category) => {
-    Axios.put(`/job_categories/id=${currentJobCategory.id}/update/`, category)
-    .then(res => {
-        console.log("Category Updated Successfullyyy !!");
-        console.log(res);
-        loadJobCategoryList();
-        setIsEdit(false);
-        
-    })
-    .catch(err => {
-        console.log("Error Updating Category");
-        console.log(err);
-    })  
+  const editJobCategory = (category) => {
+    setCurrentJobCategory(category);
+    setIsEdit(true);
 }
 
-      const allTheJobCategories = jobCategory.map((category , index) => (
+  const updateJobCategory = (updatedCategory) => {
+    const id = currentJobCategory.id;
+    Axios.put(`/job_categories/${id}/update/`, updatedCategory)
+    .then(res => {
+      console.log('Job Category updated successfuly', res);
+      loadJobCategoryList();
+      setIsEdit(false);
+    })
+    .catch(err => {
+      console.log('error updataing Job Category', err);
+    })
+  }
 
-        <ul key={index}>  
+      // const allTheJobCategories = jobCategory.map((category , index) => (
+
+      //   <ul key={index}>  
        
-          <JobCategory {...category} deleteJobCategory = {deleteJobCategory}/>
-        </ul>
-      ))
+      //     <JobCategory {...category} deleteJobCategory = {deleteJobCategory} editJobCategory={editJobCategory}/>
+      //   </ul>
+      // ))
+
+      const handleClick = () => {
+        setIsAdd(!isAdd)
+    }
 
   return (
     <div>
-      <div>
         <h1>Job Category List</h1>
-
-        {allTheJobCategories}
-
-      </div>
-
-      {(!isEdit) ?
-      <JobCategoryCreateForm addJobCategory = {addJobCategory}/>
-        :
-        <JobCategoryEditForm key={currentJobCategory.id} category={currentJobCategory} updateJobCategory={updateJobCategory} />
-      }
-      {/* <JobCategoryCreateForm addJobCategory = {addJobCategory}/> */}
+        <button className='btn' onClick={handleClick}>Add Job Category</button>
+        {isAdd && 
+        <JobCategoryCreateForm addJobCategory={addJobCategory} />
+        }
+        {isEdit && 
+        <JobCategoryEditForm category={currentJobCategory} updateJobCategory={updateJobCategory} />
+        }
+        <div className='row'>
+            {jobCategory.map((category, index) => (
+                <div key={category.id} className='col-sm-3 mb-3 mb-sm-0'>
+                    <div className='card'>
+                        <div className="card-body">
+                            <h5 className="card-title" >{category.category_name}</h5>
+                        </div>
+                        <div className="card-body">
+                            <a href="#" className="card-link" onClick={() => editJobCategory(category)}>Edit</a>
+                            <a href="#" className="card-link" onClick={() => deleteJobCategory(category.id)}>Delete</a>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
     </div>
   )
 }

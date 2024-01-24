@@ -102,7 +102,8 @@ function App() {
           <Route path="/about" element={<About/>} />
           <Route path='/skills' element={<SkillsList/>} />
           <Route path='/companies' element={<CompanyList />} />
-          <Route path="/jobs/" element={<JobList/>}/>
+          <Route path="/jobs" element={<JobList/>}/>
+          <Route path='/job_category' element={<JobCategoryList/>}/>
                                    
           <Route path="/signup" element={<Signup></Signup>} />
           <Route path="/login/" element={<Login></Login>} />
