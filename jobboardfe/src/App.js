@@ -19,6 +19,7 @@ import ApplicationList from './components/application/ApplicationList';
 import ApplicationCreateForm from './components/application/ApplicationCreateForm';
 import JobsByCompany from './components/job/JobsByCompany';
 import ApplicationByJob from './components/application/ApplicationByJob';
+import JobsByCategory from './components/jobCategory/JobsByCategory';
 
 
 function App() {
@@ -187,7 +188,7 @@ function App() {
                 <li>
                   <Link to="/jobs/" className="nav-link px-2 text-white">
                     {" "}
-                    Browse Category
+                    Browse Jobs
                   </Link>
                 </li>
                 <li>
@@ -196,13 +197,27 @@ function App() {
                     Companies
                   </Link>
                 </li>
+                <li>
+                  <Link to="/job_category/" className="nav-link px-2 text-white">
+                    {" "}
+                    Browse Categories
+                  </Link>
+                </li>
+
                 </>
                 ):(
+                  <>
                   <li>
-                  <a href="/jobs/" className="nav-link px-2 text-white">
+                  <a href="/job_category/" className="nav-link px-2 text-white">
                     Browse Category
                   </a>
                 </li>
+                  <li>
+                  <a href="/jobs/" className="nav-link px-2 text-white">
+                    Browse Jobs
+                  </a>
+                </li>
+                </>
                
                 )
               }
@@ -263,6 +278,7 @@ function App() {
           <Route path='/application/:id' element={<ApplicationCreateForm user={user} />} />
           <Route path='/job/compnany/:id' element={<JobsByCompany user={user} /> } />
           <Route path='/job/applications/:id' element={<ApplicationByJob user={user} />} />
+          <Route path='/job_by_category/:id' element={<JobsByCategory user={user} />} />
         </Routes>
       </main>
 
