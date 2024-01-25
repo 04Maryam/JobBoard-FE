@@ -57,12 +57,28 @@ export default function Job(props) {
     <td>{props.job_description}</td>
     <td>{props.job_salary}</td>
     <td>{skills.join(', ')}</td>
-    <td><button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>Edit</button></td>
-    <td><button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>Delete</button></td>
+    {(props.user == props.userId) &&(props.viewApplications) ? (
+    <>
+      <td>
+        <button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>
+          Edit
+        </button>
+      </td>
+      <td>
+        <button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>
+          Delete
+        </button>
+      </td>
+    </>
+  ) : null}
     <td><button className='btn btn-danger btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button></td>
-    {props.viewApplications &&
-    <td><button className='btn btn-danger btn-sm' onClick={() => {props.viewApplications(props.id)}}>View Applications</button></td>
-    }
+    {props.viewApplications && props.user === props.userId && (
+  <td>
+    <button className='btn btn-danger btn-sm' onClick={() => {props.viewApplications(props.id)}}>
+      View Applications
+    </button>
+  </td>
+)}
     </>
   )
 }

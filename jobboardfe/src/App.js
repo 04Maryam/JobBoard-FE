@@ -27,7 +27,9 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
   const [currentUser, setCurrentUser] = useState();
-  const [userInfo,setUserInfo]=useState()
+  const [userInfo,setUserInfo]=useState({})
+  const [userProfileInfo, setUserProfileInfo] = useState({})
+  const [userRole, setUserRole] = useState("")
 
   useEffect(() => {
     //const user = setUser();
@@ -36,12 +38,18 @@ function App() {
     if (user) {
       setIsAuth(true);
       setUser(user);
+      if(user != 1){
+        getUserInfo(user)
+        getUserRole(user)
+      }
+      // getUserRole(user)
       // setUserInfo(user.id)
       // showUser(user.id)
     }
     else {
       logout()
     }
+    getUserRole()
    
   }, []);
 
@@ -86,6 +94,39 @@ function App() {
     })
     .catch(err => {
         console.log('error logging in', err.response);
+    })
+  }
+
+  const getUserInfo = (user) => {
+    console.log(user);
+    Axios.get(`user/${user}/info/`, {
+      headers: {
+        Authorization:'Bearer '+ localStorage.getItem("access_token")
+    }
+    })
+    .then(res => {
+      console.log("user info loaded", res);
+      setUserInfo(res.data.user_info)
+      setUserProfileInfo(res.data.profile_info)
+    })
+    .catch(err => {
+      console.log("error getting user info", err);
+    })
+  }
+
+  const getUserRole = (user) => {
+    // console.log(user);
+    Axios.get('user/role/', {
+      headers: {
+        Authorization:'Bearer '+ localStorage.getItem("access_token")
+    }
+    })
+    .then(res => {
+      console.log('user role', res);
+      setUserRole(res.data)
+    })
+    .catch(err => {
+      console.log('error getting user role', err);
     })
   }
 
@@ -266,19 +307,22 @@ function App() {
         <Routes>
           <Route path="/" element={<Home></Home>} />
           <Route path="/about" element={<About/>} />
-          <Route path='/skills' element={<SkillsList/>} />
-          <Route path='/company/' element={<CompanyList/>} />
-          <Route path="/jobs" element={<JobList/>}/>
-           <Route path="/company/create" element={<CompanyCreateForm />} />  
-           <Route path='/application/' element={isAuth ? (<ApplicationList/>) : <Login login={handleLogin} />}/>                      
+          <Route path='/skills' element={<SkillsList role={userRole} />} />
+          <Route path='/company/' element={<CompanyList role={userRole}/>} />
+          <Route path="/jobs" element={<JobList role={userRole} user={user}/>}/>
+           <Route path="/company/create" element={<CompanyCreateForm role={userRole}/>} />  
+           <Route path='/application/' element={isAuth ? (<ApplicationList role={userRole} />) : <Login login={handleLogin} />}/>                      
           <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
-          <Route path='/job_category' element={<JobCategoryList/>}/>
-          <Route path='/application/:id' element={<ApplicationCreateForm user={user} />} />
-          <Route path='/job/compnany/:id' element={<JobsByCompany user={user} /> } />
-          <Route path='/job/applications/:id' element={<ApplicationByJob user={user} />} />
+
+          <Route path='/job_category' element={<JobCategoryList role={userRole} />}/>
+          <Route path='/application/:id' element={<ApplicationCreateForm role={userRole} user={user} />} />
+          <Route path='/job/compnany/:id' element={<JobsByCompany role={userRole} user={user} /> } />
+          <Route path='/job/applications/:id' element={<ApplicationByJob role={userRole} user={user} />} />
           <Route path='/job_by_category/:id' element={<JobsByCategory user={user} />} />
+
+
         </Routes>
       </main>
 
