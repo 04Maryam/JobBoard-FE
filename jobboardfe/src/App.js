@@ -255,6 +255,7 @@ function App() {
                   <Link to="/jobs/" className="nav-link px-2 text-white">
                   <a href="/job_category/" className="nav-link px-2 text-white">
                     Browse Category
+                  </a>
                   </Link>
                 </li>
                   <li>
