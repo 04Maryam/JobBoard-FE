@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Company from './Company'
 import CompanyCreateForm from './CompanyCreateForm'
 import CompanyEditForm from './CompanyEditForm'
+import { useNavigate } from 'react-router-dom'
 
 export default function CompanyList(props) {
 
@@ -10,6 +11,7 @@ export default function CompanyList(props) {
     const [currentCompany, setCurrentCompany] = useState({})
     const [isAdd, setIsAdd] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const navigate = useNavigate()
 
     const setHeaders = () => {
         return{
@@ -83,10 +85,14 @@ export default function CompanyList(props) {
         })
     }
 
+    const viewJobs = (id) => {
+        navigate(`/job/compnany/${id}`)
+    }
+
     const allCompany = companies.map((company, index) => {
         return (
             <div key={index} className='col'>
-                <Company {...company} editCompany={editCompany} deleteCompany={deleteCompany} />
+                <Company {...company} editCompany={editCompany} deleteCompany={deleteCompany} viewJobs={viewJobs} />
             </div>
         )
     })

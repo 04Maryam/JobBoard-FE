@@ -60,6 +60,7 @@ export default function Job(props) {
     <td>{skills.join(',')}</td>
     <td><button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>Edit</button></td>
     <td><button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>Delete</button></td>
+    <td><button className='btn btn-danger btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button></td>
     </>
   )
 }

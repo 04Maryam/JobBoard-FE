@@ -3,12 +3,14 @@ import Axios from 'axios';
 import Job from './Job';
 import JobCreateForm from './JobCreateForm';
 import JobEditForm from './JobEditForm';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function JobList() {
     const [job, setJob] = useState([]);
     const [isEdit, setIsEdit] = useState(false)
     const [isAdd, setIsAdd] = useState(false);
     const [currentJob, setCurrentJob] = useState({})
+    const navigate = useNavigate()
   
     const setHeaders = () => {
       return{
@@ -103,12 +105,16 @@ export default function JobList() {
           console.log(err);
       })  
   }
-  
+
+      const jobApply = (id) => {
+        navigate(`/application/${id}`)
+      }
+
         const allTheJobCategories = job.map((job , index) => (
   
           <tr key={index}>  
          
-            <Job {...job} deleteJob= {deleteJob} editJob={editJob}/>
+            <Job {...job} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} />
           </tr>
         ))
   
