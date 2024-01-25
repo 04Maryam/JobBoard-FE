@@ -10,7 +10,7 @@ export default function Job(props) {
   useEffect(() => {
     loadCompany()
     loadJobCategory()
-    loadSkills()
+    loadJobSkills()
   }, []);
 
   const loadCompany = () => {
@@ -35,20 +35,19 @@ export default function Job(props) {
         });
   }
 
-  const loadSkills = () => {
-    const skillIds = props.skills.map(skill => skill.id);
-    // /skill/?ids=${skillIds.join(',')}
-      Axios.get(`/jobs/assoc_job/?job_id=${props.id}&skill_id=${props.skills.id}`)
-        .then(response => {
-          console.log(response.data)
-          const fetchedSkillNames = response.data.map(skill => skill.skill_name);
-          console.log(fetchedSkillNames)
-          setSkills(fetchedSkillNames);
-        })
-        .catch(error => {
-          console.log('Error fetching skill details:', error);
-        });
+  const loadJobSkills = () => {
+    Axios.get(`/jobs/${props.id}/`)
+    .then(response => {
+      console.log(response.data.job.skills)
+      const fetchedSkillNames = response.data.job.skills.map(skill => skill.skill_name);
+
+      setSkills(fetchedSkillNames);
+    })
+    .catch(error => {
+      console.log('Error fetching job skills:', error);
+    });
   }
+
 
   return (
     <>
@@ -57,9 +56,10 @@ export default function Job(props) {
     <td>{props.job_title}</td>
     <td>{props.job_description}</td>
     <td>{props.job_salary}</td>
-    <td>{skills.join(',')}</td>
+    <td>{skills.join(', ')}</td>
     <td><button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>Edit</button></td>
     <td><button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>Delete</button></td>
+    <td><button className='btn btn-danger btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button></td>
     </>
   )
 }

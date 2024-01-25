@@ -70,7 +70,7 @@ export default function About() {
 <div className="col-lg-4">
     <img src='AboutPage1.jpg' alt='' className="bd-placeholder-img rounded-circle" width="140" height="140"></img>
         <h4 className="fw-normal">Maryam Mohamed</h4>
-        <p className='display-15'>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p className='display-14'>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
         <div className="btn btn-secondary btn-sm">Admin »</div>
 </div>
 

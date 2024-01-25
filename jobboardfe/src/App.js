@@ -1,12 +1,12 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
-// import logo from './logo.svg'
+// import logo from '../public/images/SLogo.svg'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import './App.css';
 import { jwtDecode } from "jwt-decode";
 import Home from './components/home/Home';
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, Router } from "react-router-dom";
 import About from './components/about/About';
 import Signup from "./components/authentication/Signup";
 import JobCategoryList from './components/jobCategory/JobCategoryList';
@@ -15,6 +15,9 @@ import CompanyList from './components/company/CompanyList';
 import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
 import CompanyCreateForm from './components/company/CompanyCreateForm';
+import ApplicationList from './components/application/ApplicationList';
+import ApplicationCreateForm from './components/application/ApplicationCreateForm';
+import JobsByCompany from './components/job/JobsByCompany';
 import JobCreateForm from './components/job/JobCreateForm';
 import CompanyEditForm from './components/company/CompanyEditForm';
 
@@ -159,15 +162,17 @@ function App() {
   return (
     <>
       <div className="App">
-        <header className="p-3 purple-header">
+        <header className="purple-header">
           <div className="container">
             <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
               <Link
                 href="/"
                 className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-              ></Link>
+              >
+              <img src='/images/SLogo.svg' width='100px'/>
+            </Link>
 
-              <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <ul className="nav pe-2 col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
                   <Link to="/" className="nav-link px-2 text-white">
                     Home
@@ -251,12 +256,14 @@ function App() {
           <Route path='/company/' element={<CompanyList/>} />
           <Route path="/jobs" element={<JobList/>}/>
           <Route path='/job/create/' element={<JobCreateForm />} />
-          <Route path="/company/create/" element={<CompanyCreateForm />} />                       
+          <Route path="/company/create/" element={<CompanyCreateForm />} />  
+           <Route path='/application/' element={isAuth ? (<ApplicationList/>) : <Login login={handleLogin} />}/>                      
           <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
           <Route path='/job_category' element={<JobCategoryList/>}/>
-          <Route path='/company/edit/' element={<CompanyEditForm />} />
+          <Route path='/application/:id' element={<ApplicationCreateForm user={user} />} />
+          <Route path='/job/compnany/:id' element={<JobsByCompany user={user} /> } />
         </Routes>
       </main>
 

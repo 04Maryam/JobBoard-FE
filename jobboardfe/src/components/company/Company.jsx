@@ -12,6 +12,7 @@ export default function Company(props) {
       <div className='card-footer'>
         <button className='btn btn-purple btn-sm' onClick={() => {props.editCompany(props)}}>Edit</button>
         <button className='btn btn-danger btn-sm' onClick={() => {props.deleteCompany(props.id)}}>Delete</button>
+        <button className='btn btn-purple btn-sm' onClick={() => {props.viewJobs(props.id)}}>View Jobs</button>
       </div>
     </div>
   )
