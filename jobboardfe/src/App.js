@@ -315,6 +315,7 @@ function App() {
           <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
+
           <Route path='/job_category' element={<JobCategoryList role={userRole} />}/>
           <Route path='/application/:id' element={<ApplicationCreateForm role={userRole} user={user} />} />
           <Route path='/job/compnany/:id' element={<JobsByCompany role={userRole} user={user} /> } />
