@@ -92,7 +92,7 @@ export default function JobList() {
     const updateJob= (job) => {
       Axios.post(`/jobs/update/?category_id=${job.job_category}&job_id=${currentJob.id}`, job, setHeaders())
       .then(res => {
-          console.log("Category Updated Successfullyyy !!", res);
+          console.log("Job Updated Successfullyyy !!", res);
           console.log(res);
           setIsEdit(false);
           loadJobList();

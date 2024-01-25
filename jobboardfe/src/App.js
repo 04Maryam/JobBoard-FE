@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react';
-// import logo from './logo.svg'
+// import logo from '../public/images/SLogo.svg'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import './App.css';
@@ -158,15 +158,17 @@ function App() {
   return (
     <>
       <div className="App">
-        <header className="p-3 purple-header">
+        <header className="purple-header">
           <div className="container">
             <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
               <a
                 href="/"
                 className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-              ></a>
+              >
+              <img src='/images/SLogo.svg' width='100px'/>
+            </a>
 
-              <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <ul className="nav pe-2 col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
                   <a href="/" className="nav-link px-2 text-white">
                     Home

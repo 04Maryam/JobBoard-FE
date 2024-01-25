@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 
 export default function JobCreateForm(props) {
-    const [newJob, setJob] = useState({})
+    const [newJob, setJob] = useState({
+      company: '',  
+      job_category: '',
+      job_title: '',
+      job_description: '',
+      job_salary: '',
+      skills: []
+    })
 
     const [companies, setCompanies] = useState([]);
     const [jobCategories, setJobCategories] = useState([]);
@@ -56,10 +63,16 @@ export default function JobCreateForm(props) {
       const attributeToChange = event.target.name
       const newValue = event.target.value
       
-      const job = {...newJob}
-      job[attributeToChange] = newValue
-      console.log(job)
-      setJob(job)
+      if (attributeToChange === 'skills[]') {
+        const selectedSkills = Array.from(event.target.selectedOptions, option => parseInt(option.value, 10));
+        setJob(prevJob => ({ ...prevJob, skills: selectedSkills }));
+      } else {
+        setJob(prevJob => ({ ...prevJob, [attributeToChange]: newValue }));
+      }
+      // const job = {...newJob}
+      // job[attributeToChange] = newValue
+      // console.log(job)
+      // setJob(job)
     }
 
     
@@ -110,7 +123,7 @@ export default function JobCreateForm(props) {
 
         <div>
           <label>Skills</label>
-          <select name='skills' className="form-select" multiple onChange={handleChange} value={newJob.skills}>
+          <select name='skills[]' className="form-select" multiple onChange={handleChange} value={newJob.skills}>
             {skills.map(skill => (
               <option key={skill.id} value={skill.id}>{skill.skill_name}</option>
             ))}

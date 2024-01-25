@@ -56,10 +56,16 @@ export default function JobEditForm(props) {
       const attributeToChange = event.target.name
       const newValue = event.target.value
       
-      const updatedJob = {...job}
-      updatedJob[attributeToChange] = newValue
-      console.log(updatedJob)
-      setJob(updatedJob)
+      if (attributeToChange === 'skills[]') {
+        const selectedSkills = Array.from(event.target.selectedOptions, option => parseInt(option.value, 10));
+        setJob(prevJob => ({ ...prevJob, skills: selectedSkills }));
+      } else {
+        setJob(prevJob => ({ ...prevJob, [attributeToChange]: newValue }));
+      }
+      // const updatedJob = {...job}
+      // updatedJob[attributeToChange] = newValue
+      // console.log(updatedJob)
+      // setJob(updatedJob)
     }
 
     
@@ -110,7 +116,7 @@ export default function JobEditForm(props) {
 
         <div>
           <label>Skills</label>
-          <select name='skills' className="form-select" multiple onChange={handleChange} value={job.skills}>
+          <select name='skills[]' className="form-select" multiple onChange={handleChange} value={job.skills}>
             {skills.map(skill => (
               <option key={skill.id} value={skill.id}>{skill.skill_name}</option>
             ))}
