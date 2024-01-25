@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import JobCategory from './JobCategory';
 import JobCategoryCreateForm from './JobCategoryCreateForm';
@@ -8,7 +9,7 @@ export default function JobCategoryList() {
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false)
   const [currentJobCategory, setCurrentJobCategory] = useState({})
-
+  const [jobsByCategory , setJobsByCategory] = useState()
   const setHeaders = () => {
     const authHeader = {
       headers: {
@@ -26,6 +27,7 @@ export default function JobCategoryList() {
     loadJobCategoryList();
   }, []);
 
+  const navigate = useNavigate()
 
     const loadJobCategoryList = () => {
         Axios.get('/job_categories/')
@@ -41,7 +43,7 @@ export default function JobCategoryList() {
     }
 
     const addJobCategory = (job_category) => {
-      Axios.post("/job_categories/create/", job_category)
+      Axios.post("/job_categories/create/", job_category, setHeaders() )
       .then(res =>{
         console.log('Job Category has been Added') 
         loadJobCategoryList()
@@ -99,6 +101,18 @@ export default function JobCategoryList() {
     })
   }
 
+  // const get_jobs_by_category = (jobs) => {
+  //   const id = jobCategory.id
+  //   Axios.get(`job_categories/browse/jobs/?category_id=${id}`)
+  //   .then(res =>{
+  //     console.log("fetch the jobs by categories successfully");
+  //     console.log(res.data);
+  //     setJobsByCategory(res.data);
+  //   })
+  //   .catch(error=>{
+  //     console.log("error on fetching all jobs by category" , error);
+  //   })
+  // }
       // const allTheJobCategories = jobCategory.map((category , index) => (
 
       //   <ul key={index}>  
@@ -107,10 +121,14 @@ export default function JobCategoryList() {
       //   </ul>
       // ))
 
+      const go_to_job_by_category_page = (id) => {
+        navigate(`/job_by_category/${id}`)
+      } 
+
       const handleClick = () => {
         setIsAdd(!isAdd)
     }
-
+    
   return (
     <div>
         <h1>Job Category List</h1>
@@ -130,7 +148,10 @@ export default function JobCategoryList() {
                         </div>
                         <div className="card-body">
                             <a href="#" className="card-link" onClick={() => editJobCategory(category)}>Edit</a>
-                            <a href="#" className="card-link" onClick={() => deleteJobCategory(category.id)}>Delete</a>
+                            <a href="#" className="card-link" onClick={() => deleteJobCategory(category.id)}>Delete</a> &nbsp;
+                            <Link to={`/job_by_category/${category.id}`}>
+                              Browse Jobs
+                            </Link>
                         </div>
                     </div>
                 </div>

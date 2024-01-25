@@ -1,4 +1,4 @@
-import Axios from 'axios'
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 // import logo from '../public/images/SLogo.svg'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,10 +15,19 @@ import CompanyList from './components/company/CompanyList';
 import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
 import CompanyCreateForm from './components/company/CompanyCreateForm';
+
+import Profile from './components/user/Profile';
+import EditProfile from './components/user/EditProfile';
+import UserList from './components/user/UserList';
+
 import ApplicationList from './components/application/ApplicationList';
 import ApplicationCreateForm from './components/application/ApplicationCreateForm';
 import JobsByCompany from './components/job/JobsByCompany';
 import ApplicationByJob from './components/application/ApplicationByJob';
+import JobCreateForm from './components/job/JobCreateForm';
+import CompanyEditForm from './components/company/CompanyEditForm';
+import JobsByCategory from './components/jobCategory/JobsByCategory';
+
 
 
 function App() {
@@ -48,7 +57,12 @@ function App() {
     else {
       logout()
     }
+
+
+    loadUserData();
+
     getUserRole()
+
    
   }, []);
 
@@ -162,6 +176,17 @@ function App() {
     console.log("INIT USER",user);
   }
 
+  const loadUserData = () =>{
+    const userId = getUser()
+    Axios.get(`/user/${userId}/info/`)
+    .then(res => {
+      console.log(res);
+      setUserInfo(res.data)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
   const getUser = () => {
     const token = getToken();
@@ -173,16 +198,16 @@ function App() {
     return token;
   };
 
-  const handleLogout = () => {
-    Axios.post('/logout/')
-      .then((response) => {
-        console.log('Have Successfully Logged out:', response.data);
+  // const handleLogout = () => {
+  //   Axios.post('/logout/')
+  //     .then((response) => {
+  //       console.log('Have Successfully Logged out:', response.data);
         
-      })
-      .catch((error) => {
-        console.error('Error logging out:', error.response);
-      });
-  };
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error logging out:', error.response);
+  //     });
+  // };
 
   // const showUser = (id) =>{
   //   Axios.get(`/user/detail?id=${id}`)
@@ -205,30 +230,30 @@ function App() {
         <header className="purple-header">
           <div className="container">
             <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-              <a
+              <Link
                 href="/"
                 className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
               >
               <img src='/images/SLogo.svg' width='100px'/>
-            </a>
+            </Link>
 
               <ul className="nav pe-2 col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                  <a href="/" className="nav-link px-2 text-white">
+                  <Link to="/" className="nav-link px-2 text-white">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/about" className="nav-link px-2 text-white">
+                  <Link to="/about" className="nav-link px-2 text-white">
                     About
-                  </a>
+                  </Link>
                 </li>
                 {isAuth ? (
                   <>
                 <li>
                   <Link to="/jobs/" className="nav-link px-2 text-white">
                     {" "}
-                    Browse Category
+                    Browse Jobs
                   </Link>
                 </li>
                 <li>
@@ -237,13 +262,29 @@ function App() {
                     Companies
                   </Link>
                 </li>
+                <li>
+                  <Link to="/job_category/" className="nav-link px-2 text-white">
+                    {" "}
+                    Browse Categories
+                  </Link>
+                </li>
+
                 </>
                 ):(
+                  <>
                   <li>
-                  <a href="/jobs/" className="nav-link px-2 text-white">
+                  <Link to="/jobs/" className="nav-link px-2 text-white">
+                  <a href="/job_category/" className="nav-link px-2 text-white">
                     Browse Category
                   </a>
+                  </Link>
                 </li>
+                  <li>
+                  <a href="/jobs/" className="nav-link px-2 text-white">
+                    Browse Jobs
+                  </a>
+                </li>
+                </>
                
                 )
               }
@@ -263,11 +304,21 @@ function App() {
 
               <div className="text-end">
                 {isAuth ? (
+                  <>
                   <button type="button" onClick={logout} className="btn btn-outline-light me-2">
                   Logout
                 </button>
+                
+                <div>
+                 <Link to="/profile">
+                  <img src={userInfo.profile_info.image} />
+                </Link>
+                </div>
+                </>
+
                 ):(
-                  <>
+                 
+                 <>
                 <Link to="/login/">
                   <button type="button" className="btn btn-outline-light me-2">
                     Login
@@ -278,6 +329,9 @@ function App() {
                     Sign-up
                   </button>
                 </Link>
+
+                
+               
                 </>
                 )
                 }
@@ -290,20 +344,33 @@ function App() {
       
       <main>
         <Routes>
-          <Route path="/" element={<Home></Home>} />
+        <Route path="/" element={<Home user={user} />} />
           <Route path="/about" element={<About/>} />
+                     
           <Route path='/skills' element={<SkillsList role={userRole} />} />
           <Route path='/company/' element={<CompanyList role={userRole}/>} />
           <Route path="/jobs" element={<JobList role={userRole} user={user}/>}/>
+          <Route path='/job/create/' element={<JobCreateForm />} />
            <Route path="/company/create" element={<CompanyCreateForm role={userRole}/>} />  
            <Route path='/application/' element={isAuth ? (<ApplicationList role={userRole} />) : <Login login={handleLogin} />}/>                      
+
           <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
+
+          <Route path='/profile' element={userInfo? <Profile getUser={getUser} user={userInfo}/> : ""}/>
+          <Route path='profile/edit'element={<EditProfile/>}/>
+//           <Route path='/user' element={<UserList/>}/>
+
+
+     
+
           <Route path='/job_category' element={<JobCategoryList role={userRole} />}/>
           <Route path='/application/:id' element={<ApplicationCreateForm role={userRole} user={user} />} />
           <Route path='/job/compnany/:id' element={<JobsByCompany role={userRole} user={user} /> } />
           <Route path='/job/applications/:id' element={<ApplicationByJob role={userRole} user={user} />} />
+          <Route path='/job_by_category/:id' element={<JobsByCategory user={user} />} />
+
         </Routes>
       </main>
 
