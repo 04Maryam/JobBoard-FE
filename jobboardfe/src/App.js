@@ -131,16 +131,16 @@ function App() {
     return token;
   };
 
-  const handleLogout = () => {
-    Axios.post('/logout/')
-      .then((response) => {
-        console.log('Have Successfully Logged out:', response.data);
+  // const handleLogout = () => {
+  //   Axios.post('/logout/')
+  //     .then((response) => {
+  //       console.log('Have Successfully Logged out:', response.data);
         
-      })
-      .catch((error) => {
-        console.error('Error logging out:', error.response);
-      });
-  };
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error logging out:', error.response);
+  //     });
+  // };
 
   // const showUser = (id) =>{
   //   Axios.get(`/user/detail?id=${id}`)
