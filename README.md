@@ -119,11 +119,20 @@ Overall, the job board acts as a dynamic and collaborative space, connecting job
 - Mobile Responsive
 - Single-Page Application
 ## Screenshots
-
+![Alt text](image.png)
+![Alt text](image-1.png)
+![Alt text](image-2.png)
+![Alt text](image-3.png)
+![Alt text](image-4.png)
+![Alt text](image-5.png)
 ## Future Features Enhancements
-- 
+- adding request admin table (request form)
+- search by job , company
+- Implementing restriction on adding a new company, skill, and category if it's already exist
+  
 ## List of Unsolved Problems and Difficulties
-
+- Add skill to profile 
+- Have to do extra authorization and permissions
 
 
 

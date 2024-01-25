@@ -34,7 +34,11 @@ export default function JobsByCompany(props) {
 
     const gettingJobs = () => {
         console.log('company id', companyId);
-        Axios.get(`/company/browse/jobs/?id=${companyId}`)
+        Axios.get(`/company/browse/jobs/?id=${companyId}`, {
+            headers: {
+                Authorization:'Bearer '+ localStorage.getItem("access_token")
+            }
+        })
         .then(res => {
             console.log('getting job list is successful', res);
             setJobs(res.data.jobs)
@@ -103,7 +107,7 @@ export default function JobsByCompany(props) {
   
         <tr key={index}>  
        
-          <Job {...job} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} viewApplications={viewApplications} />
+          <Job {...job} role={props.role} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} viewApplications={viewApplications} userId={props.user} />
         </tr>
       ))
 
@@ -124,8 +128,11 @@ export default function JobsByCompany(props) {
                 <th> Job Description</th>
                 <th>Salary</th>
                 <th>Skills</th>
+                {(props.user == jobs.user)?
+                (<>
                 <th>Edit</th>
                 <th>Delete</th>
+                </>) : null}
               </tr>
             </thead> */}
             <tbody>

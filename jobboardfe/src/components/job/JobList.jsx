@@ -5,7 +5,7 @@ import JobCreateForm from './JobCreateForm';
 import JobEditForm from './JobEditForm';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function JobList() {
+export default function JobList(props) {
     const [job, setJob] = useState([]);
     const [isEdit, setIsEdit] = useState(false)
     const [isAdd, setIsAdd] = useState(false);
@@ -15,7 +15,6 @@ export default function JobList() {
     const setHeaders = () => {
       return{
           headers: {
-              // Authorization:'Bearer '+ localStorage.getItem("access_token")
               Authorization:'Bearer '+ localStorage.getItem("access_token")
           }
       };
@@ -114,7 +113,7 @@ export default function JobList() {
   
           <tr key={index}>  
          
-            <Job {...job} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} />
+            <Job {...job} role={props.role} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} userId={props.user} />
           </tr>
         ))
   
@@ -132,11 +131,14 @@ export default function JobList() {
                 <th> Job Description</th>
                 <th>Salary</th>
                 <th>Skills</th>
+                {(props.user == job.user)?
+                (<>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr> */}
             {/* </thead> */}
             <tbody className='mx-auto'>
+
                 {allTheJobCategories}
             </tbody>
           </table>
