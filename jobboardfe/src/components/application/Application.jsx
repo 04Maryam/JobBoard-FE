@@ -3,7 +3,8 @@ import React from 'react'
 export default function Application(props) {
   const downloadResume = () => {
     const link = document.createElement('a');
-    link.href = props.resume; // Assuming props.resume contains the URL to the resume file
+    props.resume.replace('/main')
+    link.href = "http://localhost:8000" + props.resume; // Assuming props.resume contains the URL to the resume file
     console.log(link.href);
     link.download = 'resume.pdf'; // You can set the desired file name
     link.click();
