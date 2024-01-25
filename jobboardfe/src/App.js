@@ -112,7 +112,7 @@ function App() {
 
   const getUserInfo = (user) => {
     console.log(user);
-    Axios.get(`user/${user}/info/`, {
+    Axios.get(`/user/${user}/info/`, {
       headers: {
         Authorization:'Bearer '+ localStorage.getItem("access_token")
     }
@@ -129,7 +129,7 @@ function App() {
 
   const getUserRole = (user) => {
     // console.log(user);
-    Axios.get('user/role/', {
+    Axios.get('/user/role/', {
       headers: {
         Authorization:'Bearer '+ localStorage.getItem("access_token")
     }
@@ -178,7 +178,11 @@ function App() {
 
   const loadUserData = () =>{
     const userId = getUser()
-    Axios.get(`/user/${userId}/info/`)
+    Axios.get(`/user/${userId}/info/`, {
+      headers: {
+        Authorization:'Bearer '+ localStorage.getItem("access_token")
+    }
+    })
     .then(res => {
       console.log(res);
       setUserInfo(res.data)
@@ -309,11 +313,11 @@ function App() {
                   Logout
                 </button>
                 
-                <div>
+                {/* <div>
                  <Link to="/profile">
-                  <img src={userProfileInfo.image} />
+                  <img src={userProfileInfo.image} width='50px' />
                 </Link>
-                </div>
+                </div> */}
                 </>
 
                 ):(
