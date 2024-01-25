@@ -51,15 +51,60 @@ export default function Job(props) {
 
   return (
     <>
-    <td>{companyName}</td>
+    {/* <td>{companyName}</td>
     <td>{category}</td>
     <td>{props.job_title}</td>
     <td>{props.job_description}</td>
     <td>{props.job_salary}</td>
     <td>{skills.join(', ')}</td>
-    <td><button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>Edit</button></td>
-    <td><button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>Delete</button></td>
+    {(props.user == props.userId) &&(props.viewApplications) ? (
+    <>
+      <td>
+        <button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>
+          Edit
+        </button>
+      </td>
+      <td>
+        <button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>
+          Delete
+        </button>
+      </td>
+    </>
+  ) : null}
     <td><button className='btn btn-danger btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button></td>
+
+    {props.viewApplications &&
+    <td><button className='btn btn-danger btn-sm' onClick={() => {props.viewApplications(props.id)}}>View Applications</button></td>
+    } */}
+
+<div className="container mx-auto">
+<div className="card mb-3">
+      <div className="card-body">
+        <div className="d-flex flex-column flex-lg-row">
+          <div className="row flex-fill">
+            <div className="col">
+              <h4 className="h5">{props.job_title}</h4>
+              <span className="badge bg-dark">{companyName}</span> <span className="badge bg-dark">{category}</span>&nbsp;
+              <span className="badge bg-dark">{props.job_description}</span> <span className="badge bg-dark">{props.job_salary}</span>
+            </div>
+            <div className="col-sm-4 py-2">
+              <h6>Required Skills: </h6>
+              <span className="badge bg-secondary">{skills.join(', ')}</span>
+            </div>
+            <div className=" text-lg-end">
+    <button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>Edit</button>
+    <button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>Delete</button>
+    <button className='btn btn-success btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button>
+    {props.viewApplications &&
+    <button className='btn btn-danger btn-sm' onClick={() => {props.viewApplications(props.id)}}>View Applications</button>}
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+
     </>
   )
 }

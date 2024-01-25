@@ -5,7 +5,7 @@ import JobCreateForm from './JobCreateForm';
 import JobEditForm from './JobEditForm';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function JobList() {
+export default function JobList(props) {
     const [job, setJob] = useState([]);
     const [isEdit, setIsEdit] = useState(false)
     const [isAdd, setIsAdd] = useState(false);
@@ -15,7 +15,6 @@ export default function JobList() {
     const setHeaders = () => {
       return{
           headers: {
-              // Authorization:'Bearer '+ localStorage.getItem("access_token")
               Authorization:'Bearer '+ localStorage.getItem("access_token")
           }
       };
@@ -114,29 +113,32 @@ export default function JobList() {
   
           <tr key={index}>  
          
-            <Job {...job} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} />
+            <Job {...job} role={props.role} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} userId={props.user} />
           </tr>
         ))
   
     return (
       <div>
         <div>
-          <h1>Job List</h1>
-          <button className='btn' onClick={handleClick}>Add Job</button>
-          <table>
-            <thead>
-              <tr>
+          <h1 className='font mt-3 text-center'>Browse Jobs</h1>
+          <Link to="/job/create/"><div style={{ display: 'flex', justifyContent: 'center'}}><button style={{textDecoration: 'none'}} className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Job</button></div></Link>
+          <table className='mx-auto'>
+            {/* <thead> */}
+              {/* <tr>
                 <th>Company</th>
                 <th>Job Category</th>
                 <th>Job Title</th>
                 <th> Job Description</th>
                 <th>Salary</th>
                 <th>Skills</th>
+                {(props.user == job.user)?
+                (<>
                 <th>Edit</th>
                 <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
+              </tr> */}
+            {/* </thead> */}
+            <tbody className='mx-auto'>
+
                 {allTheJobCategories}
             </tbody>
           </table>
