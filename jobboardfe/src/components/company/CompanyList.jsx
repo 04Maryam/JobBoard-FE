@@ -101,7 +101,7 @@ export default function CompanyList(props) {
   return (
     <div>
         <h1 className='font mt-3 text-center'>Companies</h1>
-        <Link to="/company/create/"><button className='btn' onClick={handleClick}>Add Company</button></Link>
+        <Link to="/company/create/"><button className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Company</button></Link>
         {isAdd && 
         <CompanyCreateForm createCompany={createCompany} />
         }

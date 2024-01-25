@@ -73,14 +73,16 @@ export default function ApplicationCreateForm(props) {
 
   return (
     <div>
+      
       <h2>{currentJob.job_title}</h2>
       <form onSubmit={submitApplication} encType='multipart/form-data'>
-        <div>
+
+      <div className="form-group col-md-6 mb-3 mx-auto">
           <label className='form-label'>Upload your resume</label>
           <input className='form-control' type='file' name='resume' onChange={handleFileChange}></input>
         </div>
-        <div>
-          <input type='submit' value='Save Application'></input>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <input type='submit' className='btn btn-purple btn-sm' value='Save Application'></input>
         </div>
       </form>
     </div>

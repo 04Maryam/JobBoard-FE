@@ -41,7 +41,7 @@ export default function JobCategoryList() {
     }
 
     const addJobCategory = (job_category) => {
-      Axios.post("/job_categories/create/", job_category)
+      Axios.post("/job_categories/create/", job_category, setHeaders() )
       .then(res =>{
         console.log('Job Category has been Added') 
         loadJobCategoryList()

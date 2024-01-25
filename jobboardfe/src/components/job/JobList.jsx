@@ -122,10 +122,10 @@ export default function JobList() {
       <div>
         <div>
           <h1 className='font mt-3 text-center'>Browse Jobs</h1>
-          <Link to="/job/create/"><button className='btn btn-purple btn-sm' onClick={handleClick}>Add Job</button></Link>
-          <table>
-            <thead>
-              <tr>
+          <Link to="/job/create/"><div style={{ display: 'flex', justifyContent: 'center'}}><button style={{textDecoration: 'none'}} className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Job</button></div></Link>
+          <table className='mx-auto'>
+            {/* <thead> */}
+              {/* <tr>
                 <th>Company</th>
                 <th>Job Category</th>
                 <th>Job Title</th>
@@ -134,9 +134,9 @@ export default function JobList() {
                 <th>Skills</th>
                 <th>Edit</th>
                 <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
+              </tr> */}
+            {/* </thead> */}
+            <tbody className='mx-auto'>
                 {allTheJobCategories}
             </tbody>
           </table>

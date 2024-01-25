@@ -110,11 +110,13 @@ export default function JobsByCompany(props) {
   return (
     <div>
         <div>
-        <div>
-          <h1>Job List</h1>
-          <button className='btn' onClick={handleClick}>Add Job</button>
-          <table>
-            <thead>
+        <div> 
+          <div className='text-center'>
+          <h1> Job List</h1>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center'}}><button className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Job</button></div>
+          <table className='mx-auto'>
+            {/* <thead>
               <tr>
                 <th>Company</th>
                 <th>Job Category</th>
@@ -125,7 +127,7 @@ export default function JobsByCompany(props) {
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
-            </thead>
+            </thead> */}
             <tbody>
                 {allTheJobCategories}
             </tbody>
