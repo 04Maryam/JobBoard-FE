@@ -18,6 +18,7 @@ import CompanyCreateForm from './components/company/CompanyCreateForm';
 import ApplicationList from './components/application/ApplicationList';
 import ApplicationCreateForm from './components/application/ApplicationCreateForm';
 import JobsByCompany from './components/job/JobsByCompany';
+import ApplicationByJob from './components/application/ApplicationByJob';
 import JobCreateForm from './components/job/JobCreateForm';
 import CompanyEditForm from './components/company/CompanyEditForm';
 
@@ -264,6 +265,7 @@ function App() {
           <Route path='/job_category' element={<JobCategoryList/>}/>
           <Route path='/application/:id' element={<ApplicationCreateForm user={user} />} />
           <Route path='/job/compnany/:id' element={<JobsByCompany user={user} /> } />
+          <Route path='/job/applications/:id' element={<ApplicationByJob user={user} />} />
         </Routes>
       </main>
 
