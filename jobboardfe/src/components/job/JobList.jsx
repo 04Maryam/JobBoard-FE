@@ -121,7 +121,9 @@ export default function JobList(props) {
       <div>
         <div>
           <h1>Job List</h1>
+          {props.user != 'J' &&
           <button className='btn' onClick={handleClick}>Add Job</button>
+    }
           <table>
             <thead>
               <tr>

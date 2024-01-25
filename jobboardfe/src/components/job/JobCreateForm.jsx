@@ -23,7 +23,11 @@ export default function JobCreateForm(props) {
     
     // Fetch data for companies, job categories, and skills
     const loadCompanies = () => {
-      Axios.get('/company/')
+      Axios.get('/company/user/', {
+        headers: {
+          Authorization:'Bearer '+ localStorage.getItem("access_token")
+      }
+      })
       .then(response => {
         console.log('Companies list loaded');
         console.log(response.data);
