@@ -15,6 +15,8 @@ import CompanyList from './components/company/CompanyList';
 import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
 import CompanyCreateForm from './components/company/CompanyCreateForm';
+import JobCreateForm from './components/job/JobCreateForm';
+import CompanyEditForm from './components/company/CompanyEditForm';
 
 
 function App() {
@@ -248,12 +250,13 @@ function App() {
           <Route path='/skills' element={<SkillsList/>} />
           <Route path='/company/' element={<CompanyList/>} />
           <Route path="/jobs" element={<JobList/>}/>
-           <Route path="/company/create" element={<CompanyCreateForm />} />                       
+          <Route path='/job/create/' element={<JobCreateForm />} />
+          <Route path="/company/create/" element={<CompanyCreateForm />} />                       
           <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
           <Route path='/job_category' element={<JobCategoryList/>}/>
-      
+          <Route path='/company/edit/' element={<CompanyEditForm />} />
         </Routes>
       </main>
 

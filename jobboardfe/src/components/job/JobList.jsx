@@ -3,6 +3,7 @@ import Axios from 'axios';
 import Job from './Job';
 import JobCreateForm from './JobCreateForm';
 import JobEditForm from './JobEditForm';
+import {  Link } from "react-router-dom";
 
 export default function JobList() {
     const [job, setJob] = useState([]);
@@ -115,8 +116,8 @@ export default function JobList() {
     return (
       <div>
         <div>
-          <h1>Job List</h1>
-          <button className='btn' onClick={handleClick}>Add Job</button>
+          <h1 className='font mt-3 text-center'>Browse Jobs</h1>
+          <Link to="/job/create/"><button className='btn btn-purple btn-sm' onClick={handleClick}>Add Job</button></Link>
           <table>
             <thead>
               <tr>

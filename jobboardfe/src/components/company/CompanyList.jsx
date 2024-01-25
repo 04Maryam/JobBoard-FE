@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import {  Link } from "react-router-dom";
 import Company from './Company'
 import CompanyCreateForm from './CompanyCreateForm'
 import CompanyEditForm from './CompanyEditForm'
@@ -93,8 +94,8 @@ export default function CompanyList(props) {
 
   return (
     <div>
-        <h1>Companies</h1>
-        <button className='btn' onClick={handleClick}>Add Company</button>
+        <h1 className='font mt-3 text-center'>Companies</h1>
+        <Link to="/company/create/"><button className='btn' onClick={handleClick}>Add Company</button></Link>
         {isAdd && 
         <CompanyCreateForm createCompany={createCompany} />
         }

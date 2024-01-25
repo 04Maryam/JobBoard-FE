@@ -71,10 +71,12 @@ export default function JobEditForm(props) {
   return (
     
     <div>
-      <h2 className='text-center'>Create Job</h2>
+      <h2 className='text-center mt-5 font'>Edit Job</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Company</label>
+      <div className="form-row">
+
+      <div className="form-group col-md-6 mb-3 mx-auto">
+          <label className='form-label fw-bold'>Company</label>
           <select name='company' className="form-select" onChange={handleChange} value={job.company}>
               <option>Select a company</option>
               {companies.map(company => (
@@ -83,8 +85,8 @@ export default function JobEditForm(props) {
           </select>
         </div>
 
-        <div>
-          <label>Job Category</label>
+        <div className="form-group col-md-6 mb-3 mx-auto">
+          <label className='form-label fw-bold'>Job Category</label>
           <select name='job_category' className="form-select" onChange={handleChange} value={job.job_category}>
             <option>Select a job category</option>
             {jobCategories.map(category => (
@@ -92,23 +94,25 @@ export default function JobEditForm(props) {
             ))}
               </select>
         </div>
+       </div>
 
-        <div>
+       <div className="form-row">
+       <div className="form-group col-md-6 mb-3 mx-auto">
           <label>Job Title</label>
             <input type='text' name='job_title' className="form-control" value={job.job_title} onChange={handleChange} />
         </div>
 
-        <div>
+        <div className="form-group col-md-6 mb-3 mx-auto">
           <label>Job Description</label>
           <textarea name='job_description' className="form-control" value={job.job_description} onChange={handleChange} />
         </div>
 
-        <div>
+        <div className="form-group col-md-6 mb-3 mx-auto">
           <label>Salary</label>
             <input type='text' name='job_salary' className="form-control" value={job.job_salary} onChange={handleChange} />
         </div>
 
-        <div>
+        <div className="form-group col-md-6 mb-3 mx-auto">
           <label>Skills</label>
           <select name='skills' className="form-select" multiple onChange={handleChange} value={job.skills}>
             {skills.map(skill => (
@@ -117,8 +121,9 @@ export default function JobEditForm(props) {
           </select>
         </div>
 
-        <div>
-          <input type='submit' className="btn btn-secondary" value="Add Job" />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <input type='submit' className="btn btn-purple mb-3" value="Add Job" />
+        </div>
         </div>
     </form>
 </div>
