@@ -15,7 +15,9 @@ import CompanyList from './components/company/CompanyList';
 import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
 import CompanyCreateForm from './components/company/CompanyCreateForm';
-
+import Profile from './components/user/Profile';
+import EditProfile from './components/user/EditProfile';
+import UserList from './components/user/UserList';
 
 function App() {
   const navigate = useNavigate()
@@ -37,6 +39,8 @@ function App() {
     else {
       logout()
     }
+
+    loadUserData();
    
   }, []);
 
@@ -117,6 +121,17 @@ function App() {
     console.log("INIT USER",user);
   }
 
+  const loadUserData = () =>{
+    const userId = getUser()
+    Axios.get(`/user/${userId}/info/`)
+    .then(res => {
+      console.log(res);
+      setUserInfo(res.data)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
   const getUser = () => {
     const token = getToken();
@@ -216,11 +231,21 @@ function App() {
 
               <div className="text-end">
                 {isAuth ? (
+                  <>
                   <button type="button" onClick={logout} className="btn btn-outline-light me-2">
                   Logout
                 </button>
+                
+                <div>
+                 <Link to="/profile">
+                  <img src={userInfo.profile_info.image} />
+                </Link>
+                </div>
+                </>
+
                 ):(
-                  <>
+                 
+                 <>
                 <Link to="/login/">
                   <button type="button" className="btn btn-outline-light me-2">
                     Login
@@ -231,6 +256,9 @@ function App() {
                     Sign-up
                   </button>
                 </Link>
+
+                
+               
                 </>
                 )
                 }
@@ -253,6 +281,11 @@ function App() {
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
           <Route path='/job_category' element={<JobCategoryList/>}/>
+          <Route path='/profile' element={userInfo? <Profile getUser={getUser} user={userInfo}/> : ""}/>
+          <Route path='profile/edit'element={<EditProfile/>}/>
+          <Route path='/user' element={<UserList/>}/>
+
+
       
         </Routes>
       </main>
