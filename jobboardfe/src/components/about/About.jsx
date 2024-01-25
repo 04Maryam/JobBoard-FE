@@ -62,30 +62,30 @@ export default function About() {
       </div>
      </div>
 </div> */}
- <h6 className="text-body-emphasis text-center classic-font">Meet the Team</h6>
+ <h6 className="text-body-emphasis text-center classic-font mb-5">Meet the Team</h6>
 <div id="carouselExampleIntervel" className="carousel slide my-3" data-bs-ride="carousel">
   <div className="carousel-inner" data-bs-intervel='1'>
 <div className="carousel-item active text-center">
 <div className='row'>
 <div className="col-lg-4">
-    <img src='AboutPage1.jpg' alt='' className="bd-placeholder-img rounded-circle" width="140" height="140"></img>
+   
         <h4 className="fw-normal">Maryam Mohamed</h4>
-        <p className='display-15'>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p className='display-14'>Founder</p>
         <div className="btn btn-secondary btn-sm">Admin »</div>
 </div>
 
 <div className="col-lg-4">
-    <img src='AboutPage1.jpg' alt='' className="bd-placeholder-img rounded-circle" width="140" height="140"></img>
+    
         <h4 className="fw-normal">Kawthar Mahfoodh</h4>
-        <p className='display-15'>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p className='display-15'>Founder</p>
         <div className="btn btn-secondary btn-sm">Admin »</div>
     </div>
   
     
     <div className="col-lg-4">
-    <img src='AboutPage1.jpg' alt='' className="bd-placeholder-img rounded-circle" width="140" height="140"></img>
+  
         <h4 className="fw-normal">Marwa AlKhashram</h4>
-        <p className='display-15'>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p className='display-15'>Founder</p>
         <div className="btn btn-secondary btn-sm">Admin »</div>
     </div>
     </div>
@@ -95,16 +95,16 @@ export default function About() {
     <div className="carousel-item text-center" data-bs-intervel='1'>
     <div className='row'>
     <div className="col-lg-4">
-    <img src='AboutPage1.jpg' alt='' className="bd-placeholder-img rounded-circle" width="140" height="140"></img>
+    
         <h4 className="fw-normal">Samia Jamal</h4>
-        <p className='display-15'>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p className='display-15'>Founder</p>
         <div className="btn btn-secondary btn-sm">Admin »</div>
     </div>
 
     <div className="col-lg-4">
-    <img src='AboutPage1.jpg' alt='' className="bd-placeholder-img rounded-circle" width="140" height="140"></img>
+  
         <h4 className="fw-normal">Sara Nedhal</h4>
-        <p className='display-15'>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p className='display-15'>Founder</p>
         <div className="btn btn-secondary btn-sm">Admin »</div>
     </div>
 

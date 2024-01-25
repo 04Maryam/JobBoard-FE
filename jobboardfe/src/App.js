@@ -1,12 +1,12 @@
-import Axios from 'axios'
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+// import logo from '../public/images/SLogo.svg'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import './App.css';
 import { jwtDecode } from "jwt-decode";
 import Home from './components/home/Home';
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, Router } from "react-router-dom";
 import About from './components/about/About';
 import Signup from "./components/authentication/Signup";
 import JobCategoryList from './components/jobCategory/JobCategoryList';
@@ -15,16 +15,29 @@ import CompanyList from './components/company/CompanyList';
 import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
 import CompanyCreateForm from './components/company/CompanyCreateForm';
+
 import Profile from './components/user/Profile';
 import EditProfile from './components/user/EditProfile';
 import UserList from './components/user/UserList';
+
+import ApplicationList from './components/application/ApplicationList';
+import ApplicationCreateForm from './components/application/ApplicationCreateForm';
+import JobsByCompany from './components/job/JobsByCompany';
+import ApplicationByJob from './components/application/ApplicationByJob';
+import JobCreateForm from './components/job/JobCreateForm';
+import CompanyEditForm from './components/company/CompanyEditForm';
+import JobsByCategory from './components/jobCategory/JobsByCategory';
+
+
 
 function App() {
   const navigate = useNavigate()
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
   const [currentUser, setCurrentUser] = useState();
-  const [userInfo,setUserInfo]=useState()
+  const [userInfo,setUserInfo]=useState({})
+  const [userProfileInfo, setUserProfileInfo] = useState({})
+  const [userRole, setUserRole] = useState("")
 
   useEffect(() => {
     //const user = setUser();
@@ -33,6 +46,11 @@ function App() {
     if (user) {
       setIsAuth(true);
       setUser(user);
+      if(user != 1){
+        getUserInfo(user)
+        getUserRole(user)
+      }
+      // getUserRole(user)
       // setUserInfo(user.id)
       // showUser(user.id)
     }
@@ -40,7 +58,11 @@ function App() {
       logout()
     }
 
+
     loadUserData();
+
+    getUserRole()
+
    
   }, []);
 
@@ -85,6 +107,39 @@ function App() {
     })
     .catch(err => {
         console.log('error logging in', err.response);
+    })
+  }
+
+  const getUserInfo = (user) => {
+    console.log(user);
+    Axios.get(`user/${user}/info/`, {
+      headers: {
+        Authorization:'Bearer '+ localStorage.getItem("access_token")
+    }
+    })
+    .then(res => {
+      console.log("user info loaded", res);
+      setUserInfo(res.data.user_info)
+      setUserProfileInfo(res.data.profile_info)
+    })
+    .catch(err => {
+      console.log("error getting user info", err);
+    })
+  }
+
+  const getUserRole = (user) => {
+    // console.log(user);
+    Axios.get('user/role/', {
+      headers: {
+        Authorization:'Bearer '+ localStorage.getItem("access_token")
+    }
+    })
+    .then(res => {
+      console.log('user role', res);
+      setUserRole(res.data)
+    })
+    .catch(err => {
+      console.log('error getting user role', err);
     })
   }
 
@@ -143,16 +198,16 @@ function App() {
     return token;
   };
 
-  const handleLogout = () => {
-    Axios.post('/logout/')
-      .then((response) => {
-        console.log('Have Successfully Logged out:', response.data);
+  // const handleLogout = () => {
+  //   Axios.post('/logout/')
+  //     .then((response) => {
+  //       console.log('Have Successfully Logged out:', response.data);
         
-      })
-      .catch((error) => {
-        console.error('Error logging out:', error.response);
-      });
-  };
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error logging out:', error.response);
+  //     });
+  // };
 
   // const showUser = (id) =>{
   //   Axios.get(`/user/detail?id=${id}`)
@@ -172,31 +227,33 @@ function App() {
   return (
     <>
       <div className="App">
-        <header className="p-3 purple-header">
+        <header className="purple-header">
           <div className="container">
             <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-              <a
+              <Link
                 href="/"
                 className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-              ></a>
+              >
+              <img src='/images/SLogo.svg' width='100px'/>
+            </Link>
 
-              <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <ul className="nav pe-2 col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                  <a href="/" className="nav-link px-2 text-white">
+                  <Link to="/" className="nav-link px-2 text-white">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/about" className="nav-link px-2 text-white">
+                  <Link to="/about" className="nav-link px-2 text-white">
                     About
-                  </a>
+                  </Link>
                 </li>
                 {isAuth ? (
                   <>
                 <li>
                   <Link to="/jobs/" className="nav-link px-2 text-white">
                     {" "}
-                    Browse Category
+                    Browse Jobs
                   </Link>
                 </li>
                 <li>
@@ -205,13 +262,29 @@ function App() {
                     Companies
                   </Link>
                 </li>
+                <li>
+                  <Link to="/job_category/" className="nav-link px-2 text-white">
+                    {" "}
+                    Browse Categories
+                  </Link>
+                </li>
+
                 </>
                 ):(
+                  <>
                   <li>
-                  <a href="/jobs/" className="nav-link px-2 text-white">
+                  <Link to="/jobs/" className="nav-link px-2 text-white">
+                  <a href="/job_category/" className="nav-link px-2 text-white">
                     Browse Category
                   </a>
+                  </Link>
                 </li>
+                  <li>
+                  <a href="/jobs/" className="nav-link px-2 text-white">
+                    Browse Jobs
+                  </a>
+                </li>
+                </>
                
                 )
               }
@@ -271,22 +344,33 @@ function App() {
       
       <main>
         <Routes>
-          <Route path="/" element={<Home></Home>} />
+        <Route path="/" element={<Home user={user} />} />
           <Route path="/about" element={<About/>} />
-          <Route path='/skills' element={<SkillsList/>} />
-          <Route path='/company/' element={<CompanyList/>} />
-          <Route path="/jobs" element={<JobList/>}/>
-           <Route path="/company/create" element={<CompanyCreateForm />} />                       
+                     
+          <Route path='/skills' element={<SkillsList role={userRole} />} />
+          <Route path='/company/' element={<CompanyList role={userRole}/>} />
+          <Route path="/jobs" element={<JobList role={userRole} user={user}/>}/>
+          <Route path='/job/create/' element={<JobCreateForm />} />
+           <Route path="/company/create" element={<CompanyCreateForm role={userRole}/>} />  
+           <Route path='/application/' element={isAuth ? (<ApplicationList role={userRole} />) : <Login login={handleLogin} />}/>                      
+
           <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
-          <Route path='/job_category' element={<JobCategoryList/>}/>
+
           <Route path='/profile' element={userInfo? <Profile getUser={getUser} user={userInfo}/> : ""}/>
           <Route path='profile/edit'element={<EditProfile/>}/>
-          <Route path='/user' element={<UserList/>}/>
+//           <Route path='/user' element={<UserList/>}/>
 
 
-      
+     
+
+          <Route path='/job_category' element={<JobCategoryList role={userRole} />}/>
+          <Route path='/application/:id' element={<ApplicationCreateForm role={userRole} user={user} />} />
+          <Route path='/job/compnany/:id' element={<JobsByCompany role={userRole} user={user} /> } />
+          <Route path='/job/applications/:id' element={<ApplicationByJob role={userRole} user={user} />} />
+          <Route path='/job_by_category/:id' element={<JobsByCategory user={user} />} />
+
         </Routes>
       </main>
 

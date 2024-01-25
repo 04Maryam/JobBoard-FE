@@ -3,25 +3,30 @@ import Axios from 'axios';
 import Job from './Job';
 import JobCreateForm from './JobCreateForm';
 import JobEditForm from './JobEditForm';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function JobList() {
+export default function JobList(props) {
     const [job, setJob] = useState([]);
     const [isEdit, setIsEdit] = useState(false)
+    const [isAdd, setIsAdd] = useState(false);
     const [currentJob, setCurrentJob] = useState({})
+    const navigate = useNavigate()
   
     const setHeaders = () => {
-      const authHeader = {
-        headers: {
-          Authorization: 'Bearer '+ localStorage.getItem("access_token")
-        }
-      }
-      return authHeader;
-    }
+      return{
+          headers: {
+              Authorization:'Bearer '+ localStorage.getItem("access_token")
+          }
+      };
+  }
 
     useEffect(() => {
       loadJobList();
     }, []);
   
+    const handleClick = () => {
+      setIsAdd(!isAdd)
+  }
   
       const loadJobList = () => {
           Axios.get('/jobs/')
@@ -38,9 +43,10 @@ export default function JobList() {
       
 
       const addJob = (job) => {
-        Axios.post("/jobs/create/", job)
+        console.log('Adding job:', job);
+        Axios.post(`/jobs/create/?category_id=${job.job_category}&company_id=${job.company}`, job, setHeaders())
         .then(res =>{
-          console.log('Job has been Added') 
+          console.log('Job has been Added',res) 
           loadJobList()
         })
         .catch(err => {
@@ -66,7 +72,7 @@ export default function JobList() {
     // }
   
     const deleteJob = (id) => {
-      Axios.delete(`/jobs/${id}/delete/`)
+      Axios.delete(`/jobs/${id}/delete/`, setHeaders())
       .then(res => {
           console.log("Record deleted Successfullyyy !!");
           console.log(res);
@@ -78,14 +84,19 @@ export default function JobList() {
       })  
     }
   
+    const editJob = (job) => {
+      setCurrentJob(job)
+      console.log(job);
+      setIsEdit(true)
+  }
   
     const updateJob= (job) => {
-      Axios.put(`/jobs/id=${currentJob.id}/update/`, job)
+      Axios.post(`/jobs/update/?category_id=${job.job_category}&job_id=${currentJob.id}`, job, setHeaders())
       .then(res => {
-          console.log("Category Updated Successfullyyy !!");
+          console.log("Job Updated Successfullyyy !!", res);
           console.log(res);
-          loadJobList();
           setIsEdit(false);
+          loadJobList();
           
       })
       .catch(err => {
@@ -93,40 +104,51 @@ export default function JobList() {
           console.log(err);
       })  
   }
-  
+
+      const jobApply = (id) => {
+        navigate(`/application/${id}`)
+      }
+
         const allTheJobCategories = job.map((job , index) => (
   
           <tr key={index}>  
          
-            <Job {...job} deleteJobCategory = {deleteJob}/>
+            <Job {...job} role={props.role} deleteJob= {deleteJob} editJob={editJob} apply={jobApply} userId={props.user} />
           </tr>
         ))
   
     return (
       <div>
         <div>
-          <h1>Job List</h1>
-          <table>
-            <thead>
-              <tr>
+          <h1 className='font mt-3 text-center'>Browse Jobs</h1>
+          <Link to="/job/create/"><div style={{ display: 'flex', justifyContent: 'center'}}><button style={{textDecoration: 'none'}} className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Job</button></div></Link>
+          <table className='mx-auto'>
+            {/* <thead> */}
+              {/* <tr>
                 <th>Company</th>
                 <th>Job Category</th>
                 <th>Job Title</th>
                 <th> Job Description</th>
                 <th>Salary</th>
                 <th>Skills</th>
-              </tr>
-            </thead>
-            <tbody>
+                {(props.user == job.user)?
+                (<>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr> */}
+            {/* </thead> */}
+            <tbody className='mx-auto'>
+
                 {allTheJobCategories}
             </tbody>
           </table>
         </div>
   
-        {(!isEdit) ?
+        {isAdd &&
         <JobCreateForm addJob={addJob}/>
-          :
-          <JobEditForm key={currentJob.id} category={currentJob} updateJobCategory={updateJob} />
+        }
+        {isEdit &&
+          <JobEditForm currentJob={currentJob} updateJob={updateJob} setCurrentJob={setCurrentJob}/>
         }
         {/* <JobCategoryCreateForm addJobCategory = {addJobCategory}/> */}
       </div>

@@ -1,8 +1,10 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import {  Link } from "react-router-dom";
 import Company from './Company'
 import CompanyCreateForm from './CompanyCreateForm'
 import CompanyEditForm from './CompanyEditForm'
+import { useNavigate } from 'react-router-dom'
 
 export default function CompanyList(props) {
 
@@ -10,6 +12,7 @@ export default function CompanyList(props) {
     const [currentCompany, setCurrentCompany] = useState({})
     const [isAdd, setIsAdd] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const navigate = useNavigate()
 
     const setHeaders = () => {
         return{
@@ -83,18 +86,22 @@ export default function CompanyList(props) {
         })
     }
 
+    const viewJobs = (id) => {
+        navigate(`/job/compnany/${id}`)
+    }
+
     const allCompany = companies.map((company, index) => {
         return (
             <div key={index} className='col'>
-                <Company {...company} editCompany={editCompany} deleteCompany={deleteCompany} />
+                <Company {...company} editCompany={editCompany} deleteCompany={deleteCompany} viewJobs={viewJobs} />
             </div>
         )
     })
 
   return (
     <div>
-        <h1>Companies</h1>
-        <button className='btn' onClick={handleClick}>Add Company</button>
+        <h1 className='font mt-3 text-center'>Companies</h1>
+        <Link to="/company/create/"><button className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Company</button></Link>
         {isAdd && 
         <CompanyCreateForm createCompany={createCompany} />
         }
