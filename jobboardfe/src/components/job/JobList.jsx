@@ -126,8 +126,8 @@ export default function JobList(props) {
           <Link to="/job/create/"><div style={{ display: 'flex', justifyContent: 'center'}}><button style={{textDecoration: 'none'}} className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Job</button></div></Link>
           }
           <table className='mx-auto'>
-            {/* <thead> */}
-              {/* <tr>
+            {/* <thead>
+              <tr>
 
                 <th>Company</th>
                 <th>Job Category</th>
@@ -139,8 +139,9 @@ export default function JobList(props) {
                 (<>
                 <th>Edit</th>
                 <th>Delete</th>
-              </tr> */}
-            {/* </thead> */}
+                </>
+              </tr>
+            </thead> */}
             <tbody className='mx-auto'>
 
                 {allTheJobCategories}

@@ -90,13 +90,11 @@ export default function CompanyList(props) {
         navigate(`/job/compnany/${id}`)
     }
 
-    const allCompany = companies.map((company, index) => {
-        return (
+    const allCompany = companies.map((company, index) => (
             <div key={index} className='col'>
-                <Company {...company} editCompany={editCompany} deleteCompany={deleteCompany} viewJobs={viewJobs} />
+                <Company {...company} userId={props.user} editCompany={editCompany} deleteCompany={deleteCompany} viewJobs={viewJobs} />
             </div>
-        )
-    })
+    ))
 
   return (
     <div>
