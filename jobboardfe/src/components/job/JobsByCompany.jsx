@@ -114,13 +114,17 @@ export default function JobsByCompany(props) {
   return (
     <div>
         <div>
+
         <div> 
           <div className='text-center'>
           <h1> Job List</h1>
           </div>
+           {jobs.some(job => props.user === job.user) && (
           <div style={{ display: 'flex', justifyContent: 'center'}}><button className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Job</button></div>
+             )}
           <table className='mx-auto'>
             {/* <thead>
+
               <tr>
                 <th>Company</th>
                 <th>Job Category</th>
@@ -128,11 +132,12 @@ export default function JobsByCompany(props) {
                 <th> Job Description</th>
                 <th>Salary</th>
                 <th>Skills</th>
-                {(props.user == jobs.user)?
-                (<>
-                <th>Edit</th>
-                <th>Delete</th>
-                </>) : null}
+                {jobs.some(job => props.user === job.user) && (
+                <>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </>
+              )}
               </tr>
             </thead> */}
             <tbody>

@@ -120,11 +120,15 @@ export default function JobList(props) {
     return (
       <div>
         <div>
+
           <h1 className='font mt-3 text-center'>Browse Jobs</h1>
+          {props.user != 'J' &&
           <Link to="/job/create/"><div style={{ display: 'flex', justifyContent: 'center'}}><button style={{textDecoration: 'none'}} className='btn btn-purple btn-sm mb-3' onClick={handleClick}>Add Job</button></div></Link>
+          }
           <table className='mx-auto'>
             {/* <thead> */}
               {/* <tr>
+
                 <th>Company</th>
                 <th>Job Category</th>
                 <th>Job Title</th>
