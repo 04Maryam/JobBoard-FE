@@ -1,126 +1,88 @@
-import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function ApplicationCreateForm(props) {
-    const [newJob, setJob] = useState({})
 
-    const [companies, setCompanies] = useState([]);
-    const [jobCategories, setJobCategories] = useState([]);
-    const [skills, setSkills] = useState([]);
+  const jobId = useParams().id;
+  const [newApplication, setNewApplication] = useState({})
+  const [currentJob, setCurrentJob] = useState({})
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      loadCompanies()
-      loadJobCategories()
-      loadSkills()
-    },[])
-    
-    // Fetch data for companies, job categories, and skills
-    const loadCompanies = () => {
-      Axios.get('/company/')
-      .then(response => {
-        console.log('Companies list loaded');
-        console.log(response.data);
-          setCompanies(response.data);
-      })
-      .catch(error => {
-          console.log('Companies not loaded', error);
-      });
-    }
+  useEffect(() => {
+     gettingJob()
+  }, [])
+  
 
-    const loadJobCategories = () => {
-      Axios.get('/job_categories/')
-          .then(response => {
-            console.log('Job Categories List Loaded');
-            console.log(response.data);
-            setJobCategories(response.data);
-          })
-          .catch(error => {
-            console.log('Job Categories List not Loaded');
-            console.log(error);
-          });
-    }
+  const gettingJob = () => {
+    console.log("job id",jobId);
+    Axios.get(`/jobs/${jobId}/`)
+    .then(res => {
+      console.log('job details GET is successful', res);
+      setCurrentJob(res.data)
+    })
+    .catch(err => {
+      console.log("Error getting job",err);
+    })
+  }
 
-    const loadSkills = () => {
-      Axios.get('/skill/')
-          .then(response => {
-            console.log('Skills List Loaded');
-            console.log(response.data);
-            setSkills(response.data);
-          })
-          .catch(error => {
-            console.log('Skills List not Loaded');
-            console.log(error);
-          });
-    }
-    const handleChange = (event) => {
-      const attributeToChange = event.target.name
-      const newValue = event.target.value
-      
-      const job = {...newJob}
-      job[attributeToChange] = newValue
-      console.log(job)
-      setJob(job)
-    }
+  const handleApplication = (event) => {
+    const application = {...newApplication}
+    application[event.target.name] = event.target.value;
+    console.log(application);
+    setNewApplication(application)
+  }
 
-    
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        props.addJob(newJob)
-        event.target.reset()
-    }
+  const handleFileChange = (e) => {
+    // const application = {...newApplication}
+    // application[e.target.name] = e.target.files[0]
+    // console.log(application);
+    // setNewApplication(application)
+    console.log(e.target.files[0]);
+    setNewApplication({
+      ...newApplication,
+      resume: e.target.files[0], // Get the first file selected
+    });
+}
+
+  const addApplication = (application) => {
+    // const formData = new FormData();
+    // formData.append('resume', application.resume);
+    // console.log(formData);
+    Axios.post(`/application/${props.user}/create/${jobId}/`, application, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then(res => {
+      console.log('Job application is successful', res);
+    })
+    .catch(err => {
+      console.log('Error applying for the job', err);
+    })
+  }
+
+  const submitApplication = (e) => {
+    e.preventDefault()
+    const formData = new FormData();
+    formData.append('resume', newApplication.resume);
+    addApplication(formData)
+    navigate('')
+    e.target.reset()
+  }
+
   return (
-    
     <div>
-      <h2 className='text-center'>Create Job</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>{currentJob.job_title}</h2>
+      <form onSubmit={submitApplication} encType='multipart/form-data'>
         <div>
-          <label>Company</label>
-          <select name='company' className="form-select" onChange={handleChange} value={newJob.company}>
-              <option>Select a company</option>
-              {companies.map(company => (
-                <option key={company.id} value={company.id}>{company.company_name}</option>
-              ))}
-          </select>
+          <label className='form-label'>Upload your resume</label>
+          <input className='form-control' type='file' name='resume' onChange={handleFileChange}></input>
         </div>
-
         <div>
-          <label>Job Category</label>
-          <select name='job_category' className="form-select" onChange={handleChange} value={newJob.job_category}>
-            <option>Select a job category</option>
-            {jobCategories.map(category => (
-              <option key={category.id} value={category.id}>{category.category_name}</option>
-            ))}
-              </select>
+          <input type='submit' value='Save Application'></input>
         </div>
-
-        <div>
-          <label>Job Title</label>
-            <input type='text' name='job_title' className="form-control" onChange={handleChange} />
-        </div>
-
-        <div>
-          <label>Job Description</label>
-          <textarea name='job_description' className="form-control" onChange={handleChange} />
-        </div>
-
-        <div>
-          <label>Salary</label>
-            <input type='text' name='job_salary' className="form-control" onChange={handleChange} />
-        </div>
-
-        <div>
-          <label>Skills</label>
-          <select name='skills' className="form-select" multiple onChange={handleChange} value={newJob.skills}>
-            {skills.map(skill => (
-              <option key={skill.id} value={skill.id}>{skill.skill_name}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <input type='submit' className="btn btn-secondary" value="Add Job" />
-        </div>
-    </form>
-</div>
+      </form>
+    </div>
   )
 }

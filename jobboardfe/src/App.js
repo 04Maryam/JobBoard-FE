@@ -6,7 +6,7 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import './App.css';
 import { jwtDecode } from "jwt-decode";
 import Home from './components/home/Home';
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, Router } from "react-router-dom";
 import About from './components/about/About';
 import Signup from "./components/authentication/Signup";
 import JobCategoryList from './components/jobCategory/JobCategoryList';
@@ -16,6 +16,8 @@ import JobList from './components/job/JobList';
 import Login from "./components/authentication/Login";
 import CompanyCreateForm from './components/company/CompanyCreateForm';
 import ApplicationList from './components/application/ApplicationList';
+import ApplicationCreateForm from './components/application/ApplicationCreateForm';
+import JobsByCompany from './components/job/JobsByCompany';
 
 
 function App() {
@@ -257,6 +259,8 @@ function App() {
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
           <Route path='/logout' element={<Login/>}/>
           <Route path='/job_category' element={<JobCategoryList/>}/>
+          <Route path='/application/:id' element={<ApplicationCreateForm user={user} />} />
+          <Route path='/job/compnany/:id' element={<JobsByCompany user={user} /> } />
         </Routes>
       </main>
 
