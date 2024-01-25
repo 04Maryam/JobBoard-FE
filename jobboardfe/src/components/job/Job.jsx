@@ -92,9 +92,21 @@ export default function Job(props) {
               <span className="badge bg-secondary">{skills.join(', ')}</span>
             </div>
             <div className=" text-lg-end">
+            {(props.user == props.userId) &&(props.viewApplications) ? (
+              <>
+
+    {/* <button className='btn btn-success btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button>
+    {props.viewApplications &&
+    <button className='btn btn-danger btn-sm' onClick={() => {props.viewApplications(props.id)}}>View Applications</button>} */}
+    
+    
     <button className='btn btn-purple btn-sm' onClick={() => {props.editJob(props)}}>Edit</button>
     <button className='btn btn-danger btn-sm' onClick={() => {props.deleteJob(props.id)}}>Delete</button>
-    <button className='btn btn-success btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button>
+    </>
+     ) : null}
+
+  <button className='btn btn-success btn-sm' onClick={() => {props.apply(props.id)}}>Apply</button>
+
     {props.viewApplications &&
     <button className='btn btn-danger btn-sm' onClick={() => {props.viewApplications(props.id)}}>View Applications</button>}
            </div>

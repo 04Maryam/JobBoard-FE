@@ -119,7 +119,7 @@ function App() {
     })
     .then(res => {
       console.log("user info loaded", res);
-      setUserInfo(res.data.user_info)
+      // setUserInfo(res.data.user_info)
       setUserProfileInfo(res.data.profile_info)
     })
     .catch(err => {
@@ -311,7 +311,7 @@ function App() {
                 
                 <div>
                  <Link to="/profile">
-                  <img src={userInfo.profile_info.image} />
+                  <img src={userProfileInfo.image} />
                 </Link>
                 </div>
                 </>
@@ -347,12 +347,12 @@ function App() {
         <Route path="/" element={<Home user={user} />} />
           <Route path="/about" element={<About/>} />
                      
-          <Route path='/skills' element={<SkillsList role={userRole} />} />
-          <Route path='/company/' element={<CompanyList role={userRole}/>} />
+          <Route path='/skills' element={<SkillsList user={user} role={userRole} />} />
+          <Route path='/company/' element={<CompanyList user={user} role={userRole}/>} />
           <Route path="/jobs" element={<JobList role={userRole} user={user}/>}/>
-          <Route path='/job/create/' element={<JobCreateForm />} />
-           <Route path="/company/create" element={<CompanyCreateForm role={userRole}/>} />  
-           <Route path='/application/' element={isAuth ? (<ApplicationList role={userRole} />) : <Login login={handleLogin} />}/>                      
+          <Route path='/job/create/' element={<JobCreateForm user={user} />} />
+           <Route path="/company/create" element={<CompanyCreateForm user={user} role={userRole}/>} />  
+           <Route path='/application/' element={isAuth ? (<ApplicationList user={user} role={userRole} />) : <Login login={handleLogin} />}/>                      
 
           <Route path="/signup" element={isAuth ? (<Home /> ) : (<Signup register={registerHandler} /> )} />
           <Route path="/login/" element={isAuth ? (<Home/> ): <Login login={handleLogin} />} />
@@ -360,16 +360,16 @@ function App() {
 
           <Route path='/profile' element={userInfo? <Profile getUser={getUser} user={userInfo}/> : ""}/>
           <Route path='profile/edit'element={<EditProfile/>}/>
-//           <Route path='/user' element={<UserList/>}/>
+{/* //           <Route path='/user' element={<UserList/>}/> */}
 
 
      
 
-          <Route path='/job_category' element={<JobCategoryList role={userRole} />}/>
+          <Route path='/job_category' element={<JobCategoryList user={user} role={userRole} />}/>
           <Route path='/application/:id' element={<ApplicationCreateForm role={userRole} user={user} />} />
           <Route path='/job/compnany/:id' element={<JobsByCompany role={userRole} user={user} /> } />
           <Route path='/job/applications/:id' element={<ApplicationByJob role={userRole} user={user} />} />
-          <Route path='/job_by_category/:id' element={<JobsByCategory user={user} />} />
+          <Route path='/job_by_category/:id' element={<JobsByCategory  user={user} />} />
 
         </Routes>
       </main>
