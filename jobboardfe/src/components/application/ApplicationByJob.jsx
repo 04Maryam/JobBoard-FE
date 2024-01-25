@@ -26,7 +26,7 @@ export default function ApplicationByJob() {
 
     const loadApplicationsList = () => {
         console.log(jobId);
-        Axios.get(`/application/jobs/?job_id=${jobId}`)
+        Axios.get(`/application/jobs/?job_id=${jobId}`, setHeaders())
         .then(res => {
             console.log('Applications List Fetched!', res);
             setApplications(res.data.jobs)
